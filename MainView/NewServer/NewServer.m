@@ -45,6 +45,9 @@
     resultData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
     // NSLog(@"Response Data is %@",responseDictionary);
     //NSLog(@"msg is %@", [responseDictionary objectForKey:@"msg"]);
+    
+    NSLog(@"%@",resultData);
+    
     return resultData;
     
 }

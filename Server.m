@@ -61,6 +61,7 @@
     }
      
     //NSLog(@"msg is %@", [responseDictionary objectForKey:@"msg"]);
+    NSLog(@"%@",[resultData objectForKey:@"msg"]);
     return [resultData objectForKey:@"msg"];
     
 }
