@@ -50,18 +50,18 @@
     picker = [[UIImagePickerController alloc]init];
     picker.delegate=self;
     [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil ];
     //[picker release];
 }
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [profilePicture setImage:image];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

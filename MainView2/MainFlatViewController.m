@@ -777,7 +777,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (alertView == notexistAlert ||  alertView == invalidFormatAlert || confirm){
         if ([title isEqualToString:@"OK"])
         {
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }else
     {

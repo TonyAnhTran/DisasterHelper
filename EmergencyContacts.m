@@ -196,7 +196,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     userID=1;
     picker1 = [[ABPeoplePickerNavigationController alloc] init];
     picker1.peoplePickerDelegate = self;
-    [self presentModalViewController:picker1 animated:YES];
+    [self presentViewController:picker1 animated:YES completion:nil];
 }
 
 - (IBAction)editUser2:(id)sender {
@@ -204,7 +204,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     userID=2;
     picker1 = [[ABPeoplePickerNavigationController alloc] init];
     picker1.peoplePickerDelegate = self;
-    [self presentModalViewController:picker1 animated:YES];
+    [self presentViewController:picker1 animated:YES completion:nil];
 }
 
 - (IBAction)editUser3:(id)sender {
@@ -212,17 +212,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     userID=3;
     picker1 = [[ABPeoplePickerNavigationController alloc] init];
     picker1.peoplePickerDelegate = self;
-    [self presentModalViewController:picker1 animated:YES];
+    [self presentViewController:picker1 animated:YES completion:nil];
 }
 
 - (void)peoplePickerNavigationControllerDidCancel: (ABPeoplePickerNavigationController *)peoplePicker
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (BOOL)peoplePickerNavigationController: (ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     [self displayPerson:person];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     return NO;
 }
 
@@ -459,7 +459,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     picker = [[UIImagePickerController alloc]init];
     picker.delegate=self;
     [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
     userID=1;
 }
 
@@ -467,7 +467,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     picker = [[UIImagePickerController alloc]init];
     picker.delegate=self;
     [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
     userID=2;
 }
 
@@ -475,7 +475,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     picker = [[UIImagePickerController alloc]init];
     picker.delegate=self;
     [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
     userID=3;
 }
 
@@ -534,18 +534,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         case 1:
         {
             imageUser1.image=image;
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
         case 2:
         {
             imageUser2.image=image;
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
         case 3:{
             imageUser3.image=image;
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
         default:
@@ -554,7 +554,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -602,7 +602,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }else{
             picker1 = [[ABPeoplePickerNavigationController alloc] init];
             picker1.peoplePickerDelegate = self;
-            [self presentModalViewController:picker1 animated:YES];
+            [self presentViewController:picker animated:YES completion:nil];
         }
     }
     if (alertView == password) {

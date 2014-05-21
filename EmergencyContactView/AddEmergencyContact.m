@@ -127,7 +127,7 @@ NSInteger contactIndex;
 - (void)peoplePickerNavigationControllerDidCancel:
 (ABPeoplePickerNavigationController *)peoplePicker
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -136,7 +136,7 @@ NSInteger contactIndex;
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
     [self displayPerson:person];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     return NO;
 }
