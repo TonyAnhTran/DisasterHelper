@@ -869,7 +869,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jkN-Gz-v9c">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jkN-Gz-v9c">
                                         <rect key="frame" x="148" y="252" width="24" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -896,7 +896,27 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NUQ-CP-Rqt">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yHP-co-8LH" userLabel="getDirectionsField">
+                                <rect key="frame" x="6" y="65" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="1397546015_PixelKit_direction_indicator_icon.png"/>
+                                <connections>
+                                    <action selector="buttonTapAction:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="mZZ-fS-2md"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search..." minimumFontSize="17" clearButtonMode="whileEditing" id="UVc-Yi-Sq6" userLabel="searchField">
+                                <rect key="frame" x="37" y="65" width="247" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="Xtp-pb-qx7" eventType="editingDidEndOnExit" id="9A7-uB-R1G"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NUQ-CP-Rqt" userLabel="clearMapBt">
                                 <rect key="frame" x="20" y="446" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -906,26 +926,7 @@
                                     <action selector="clear:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="saR-vF-xWM"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="Search..." minimumFontSize="17" clearButtonMode="whileEditing" id="UVc-Yi-Sq6">
-                                <rect key="frame" x="38" y="65" width="247" height="30"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                                <connections>
-                                    <action selector="dismissKeyboard:" destination="Xtp-pb-qx7" eventType="editingDidEndOnExit" id="9A7-uB-R1G"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yHP-co-8LH">
-                                <rect key="frame" x="6" y="65" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="1397546015_PixelKit_direction_indicator_icon.png"/>
-                                <connections>
-                                    <action selector="buttonTapAction:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="mZZ-fS-2md"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dEk-if-elZ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dEk-if-elZ" userLabel="getVictimsBt">
                                 <rect key="frame" x="98" y="447" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -934,22 +935,22 @@
                                     <action selector="Getvictim:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="VNb-gW-Zrq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8ZC-Q3-lGD">
-                                <rect key="frame" x="273" y="446" width="30" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="arrow-direction.png"/>
-                                <connections>
-                                    <action selector="geosv:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="PYb-7F-aEy"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vqK-wP-m1x">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vqK-wP-m1x" userLabel="changeMaptypeBt">
                                 <rect key="frame" x="193" y="446" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="globe.png"/>
                                 <connections>
                                     <action selector="changerMaptype:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="4IP-Wa-0Of"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8ZC-Q3-lGD" userLabel="myLocationBt">
+                                <rect key="frame" x="273" y="446" width="30" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="arrow-direction.png"/>
+                                <connections>
+                                    <action selector="geosv:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="PYb-7F-aEy"/>
                                 </connections>
                             </button>
                         </subviews>
