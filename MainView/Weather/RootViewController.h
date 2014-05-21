@@ -15,21 +15,18 @@
 
 {
     CLLocationManager *locationManager;
-    __weak IBOutlet UIButton *geocoder;
     __weak IBOutlet UITextField *inputField;
     __weak IBOutlet UIButton *WeatherUnit;
-
-
+    
+    
 }
-- (IBAction)MydetailWeather:(id)sender;
 
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 @property (strong,nonatomic) DHGeoforDirections *gs;
-- (IBAction)geocoderAction:(id)sender;
-- (IBAction)dismissKeyboard:(id)sender;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) NSString *userLocation;
+
 - (IBAction)ChangeUnit:(id)sender;
-
-
+- (IBAction)dismissKeyboard:(id)sender;
+- (IBAction)MydetailWeather:(id)sender;
 @end

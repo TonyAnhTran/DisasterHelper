@@ -23,9 +23,9 @@
 @synthesize mapView;
 @synthesize gs;
 @synthesize currentLocation,userLocation;
+
+
 #pragma mark - View lifecycle
-
-
 -(void)back {
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -52,15 +52,15 @@
     mapView.scrollEnabled     = YES;
     mapView.showsUserLocation = YES;
     
-
+    
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
     locationManager.distanceFilter = 10.0f;
     
-
+    
     CLLocation *location = locationManager.location;
-
+    
     locationManager.headingFilter = kCLHeadingFilterNone;
     [locationManager startUpdatingHeading];
     
@@ -85,6 +85,7 @@
         [self.mapView addOverlay:self.weatherLayer];
     }
     
+    [self setupInputAccessory];
 }
 
 
@@ -92,32 +93,48 @@
 {
     //---- For getting current gps location
     locationManager = [CLLocationManager new];
-   locationManager.delegate = self;
-   locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
-   //------
+    //------
 }
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
-          fromLocation:(CLLocation *)oldLocation
+           fromLocation:(CLLocation *)oldLocation
 {
     currentLocation = newLocation;
-
+    
+}
+- (void)setupInputAccessory {
+    
+    UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    doneToolbar.barStyle = UIBarStyleBlackTranslucent;
+    
+    doneToolbar.items = [NSArray arrayWithObjects:
+                         [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelKeyboard:)],
+                         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                         [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithKeyboard:)],
+                         nil];
+    
+    [doneToolbar sizeToFit];
+    
+    inputField.inputAccessoryView = doneToolbar;
+    
+    inputField.inputAccessoryView.tintColor = [UIColor whiteColor];
+    
+    
 }
 
-#pragma mark - Actions
 
-//- (IBAction)fontColorChanged:(UISegmentedControl *)sender
-//{
-//    self.weatherLayer.color = sender.selectedSegmentIndex;
-//    
-//    [self reloadLayer];
-//}
+- (void) cancelKeyboard: (UITextField *) textField {
+    
+    [inputField resignFirstResponder];
+}
 
-
-- (IBAction)geocoderAction:(id)sender {
+- (void) doneWithKeyboard: (UITextField *) textField {
+    [inputField resignFirstResponder];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
    	NSString *internetStatus=[user objectForKey:@"Internet"];
     
@@ -133,12 +150,13 @@
         [gs geocodeAddress:inputField.text withCallback:@selector(addMarker) withDelegate:self];
     }
     
+    
 }
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
+
 - (void)addMarker {
     //MKMapItem *item =[[MKMapItem alloc]init];
     
@@ -162,19 +180,12 @@
     // self.mapView.centerCoordinate = markercoor;
     
 }
+
+#pragma mark - Actions
+
 - (IBAction)dismissKeyboard:(id)sender {
     [inputField resignFirstResponder];
-
 }
-
-#pragma mark - Private method
-
-- (void)reloadLayer
-{
-    [self.mapView removeOverlay:self.weatherLayer];
-    [self.mapView addOverlay:self.weatherLayer];
-}
-
 
 - (IBAction)MydetailWeather:(id)sender {
     NSError* error;
@@ -245,8 +256,8 @@
                 for(int x = 0; x < [subviewArray count]; x++){
                     
                     if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
-                       // UILabel *label = [subviewArray objectAtIndex:x];
-                       // label.textAlignment = UITextAlignmentLeft;
+                        // UILabel *label = [subviewArray objectAtIndex:x];
+                        // label.textAlignment = UITextAlignmentLeft;
                     }
                 }
                 
@@ -317,13 +328,8 @@
         }
         @finally {
         }
-
         
     }
-    
-        
-
-    
 }
 - (IBAction)ChangeUnit:(id)sender {
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -343,10 +349,20 @@
             [WeatherUnit setTitle:@"°C" forState:UIControlStateNormal];
             [self reloadLayer];
         }
-
-    }
         
+    }
+    
 }
+#pragma mark - Private method
+
+- (void)reloadLayer
+{
+    [self.mapView removeOverlay:self.weatherLayer];
+    [self.mapView addOverlay:self.weatherLayer];
+}
+
+
+
 @end
 
 
@@ -366,9 +382,9 @@
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
     
-
+    
     CLLocation *location = locationManager.location;
-
+    
     MKCoordinateRegion centerRegion;
     centerRegion.center.latitude  = location.coordinate.latitude;
     centerRegion.center.longitude = location.coordinate.longitude;

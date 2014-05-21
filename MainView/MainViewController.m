@@ -77,7 +77,7 @@ NSInteger secondsCount = 30;
     
     //get victimData from SegueLogin.m
     NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
-    victimArray =[victimData valueForKey:@"victimdata"];
+    victimArray =[[victimData valueForKey:@"victimdata"]mutableCopy];
     
     NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
     //NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
@@ -1019,7 +1019,7 @@ NSInteger secondsCount = 30;
                 //NSLog(@"data is: %@",data);
                 NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
                 [victimData setValue:data forKey:@"victimdata"];
-                victimArray =[victimData valueForKey:@"victimdata"];
+                victimArray =[[victimData valueForKey:@"victimdata"]mutableCopy];
                 
                 // NSLog(@"victim array: %@",victimArray);
                 

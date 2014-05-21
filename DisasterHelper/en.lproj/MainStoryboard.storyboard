@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="lyR-4C-cko">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="lyR-4C-cko">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Login View Controller - Welcome-->
@@ -129,6 +129,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Welcome" id="fQr-4x-SpP"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="870"/>
                     <connections>
                         <outlet property="backgroundImage" destination="pih-30-SGo" id="ozh-In-7Yr"/>
                         <outlet property="contentViewLogin" destination="5RH-hu-dSE" id="5be-n2-aSh"/>
@@ -834,6 +835,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Notice Contents" id="3ld-sm-5CX"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="contentsViewNotice" destination="Lnj-H2-k6S" id="4QF-gP-bW0"/>
                         <outlet property="imageBackground" destination="cPX-Ne-bUV" id="ZYy-uh-o23"/>
@@ -982,7 +984,7 @@
                                 </connections>
                             </mapView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcC-AQ-K0d">
-                                <rect key="frame" x="1" y="447" width="319" height="37.999999999999979"/>
+                                <rect key="frame" x="1" y="447" width="319" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -999,30 +1001,12 @@
                                     <action selector="mylocation:" destination="2vY-DQ-MCT" eventType="touchUpInside" id="OKN-pX-7Qp"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Search-Fields-weather.png" id="BuX-4S-AzW">
-                                <rect key="frame" x="15" y="65" width="292" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.84999999999999987" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search..." minimumFontSize="17" id="twf-65-S6b" userLabel="inputField">
+                                <rect key="frame" x="39" y="65" width="246" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DPb-Tv-GZt">
-                                <rect key="frame" x="280" y="65" width="27" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="geocoderAction:" destination="2vY-DQ-MCT" eventType="touchUpInside" id="D1b-J7-bdd"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Search..." minimumFontSize="17" id="twf-65-S6b">
-                                <rect key="frame" x="26" y="65" width="246" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <attributedString key="attributedText"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="dismissKeyboard:" destination="2vY-DQ-MCT" eventType="editingDidEndOnExit" id="AVZ-yg-VwZ"/>
@@ -1054,7 +1038,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="WeatherUnit" destination="zha-f2-vxJ" id="frQ-td-ku9"/>
-                        <outlet property="geocoder" destination="DPb-Tv-GZt" id="c2Q-1m-o68"/>
                         <outlet property="inputField" destination="twf-65-S6b" id="kgx-8c-Z9y"/>
                         <outlet property="mapView" destination="fuW-QQ-iX0" id="Onu-0p-lKN"/>
                     </connections>
@@ -1406,6 +1389,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Register" id="2Ke-UA-zI4"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="806"/>
                     <connections>
                         <outlet property="backgroundImage" destination="q4R-hC-DId" id="SRl-oU-vf5"/>
                         <outlet property="buttonBackLogin" destination="h7t-aT-G10" id="cxD-PU-ewb"/>
@@ -1850,6 +1834,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="7Hm-TV-D01"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="backgroundImage" destination="sSr-iN-EFs" id="fri-B5-Yc8"/>
                         <outlet property="buttonChangeImage" destination="x9P-86-mRo" id="chH-pX-Wyq"/>
@@ -2009,6 +1994,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Change Password" id="486-05-pKx"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="backgroundImage" destination="hLe-L7-aYo" id="PT1-NA-3h6"/>
                         <outlet property="changePassImage" destination="rBT-3M-toe" id="CEU-7O-E1n"/>
@@ -2074,7 +2060,6 @@
         <image name="1111-1.jpg" width="1600" height="1200"/>
         <image name="1397546015_PixelKit_direction_indicator_icon.png" width="512" height="512"/>
         <image name="4.jpg" width="2560" height="1600"/>
-        <image name="Search-Fields-weather.png" width="320" height="32"/>
         <image name="add-emergeny-button.png" width="43" height="34"/>
         <image name="add-helper-button.png" width="43" height="34"/>
         <image name="advices-2.png" width="150" height="77"/>
