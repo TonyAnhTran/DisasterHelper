@@ -17,7 +17,6 @@
 		149A4AAB18ADC7EF004F5DEF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149A4AAA18ADC7EF004F5DEF /* Default@2x.png */; };
 		149A4AAD18ADC7EF004F5DEF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 149A4AAC18ADC7EF004F5DEF /* Default-568h@2x.png */; };
 		149A4AB018ADC7EF004F5DEF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 149A4AAE18ADC7EF004F5DEF /* MainStoryboard.storyboard */; };
-		149A4ABB18ADC7EF004F5DEF /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149A4ABA18ADC7EF004F5DEF /* SenTestingKit.framework */; };
 		149A4ABC18ADC7EF004F5DEF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149A4A9618ADC7EF004F5DEF /* UIKit.framework */; };
 		149A4ABD18ADC7EF004F5DEF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149A4A9818ADC7EF004F5DEF /* Foundation.framework */; };
 		149A4AC518ADC7F0004F5DEF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 149A4AC318ADC7F0004F5DEF /* InfoPlist.strings */; };
@@ -56,8 +55,7 @@
 		364A8BE818C71FF9004C659F /* red_cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 364A8BE118C71FF9004C659F /* red_cross.png */; };
 		364A8BE918C71FF9004C659F /* ViewMapMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364A8BE218C71FF9004C659F /* ViewMapMarker.xib */; };
 		364A8BEF18C7202B004C659F /* MDDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 364A8BED18C7202B004C659F /* MDDirectionService.m */; };
-		364EF3E1192C5AFC00450BC2 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 364EF3E0192C5AFC00450BC2 /* GoogleMaps.framework */; };
-		364EF3E3192C5B1100450BC2 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 364EF3E2192C5B1100450BC2 /* GoogleMaps.bundle */; };
+		364EF3E5192C6F5600450BC2 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 364EF3E4192C6F5600450BC2 /* GoogleMaps.bundle */; };
 		3662A12B18D7F5640037BAF6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3662A12A18D7F5640037BAF6 /* MapKit.framework */; };
 		3662A13618D7F8940037BAF6 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3662A13018D7F8940037BAF6 /* RootViewController.m */; };
 		3662A13718D7F8940037BAF6 /* WeatherMaps.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3662A13118D7F8940037BAF6 /* WeatherMaps.xcdatamodeld */; };
@@ -86,6 +84,7 @@
 		36DF461318D0415100560B59 /* DHGeoforDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DF461218D0415100560B59 /* DHGeoforDirections.m */; };
 		36DF461618D042F900560B59 /* DHSearchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DF461518D042F900560B59 /* DHSearchService.m */; };
 		36EA87CE18D2D61A00D7A1AA /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 36EA87CD18D2D61900D7A1AA /* arrow.png */; };
+		36ED8556192C72F5003FA6A7 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36ED8555192C72F5003FA6A7 /* GoogleMaps.framework */; };
 		501041F818EA73D00033FFE1 /* guide.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041F718EA73D00033FFE1 /* guide.html */; };
 		501041FA18EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041F918EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html */; };
 		501041FC18EA760E0033FFE1 /* sdffas.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041FB18EA760E0033FFE1 /* sdffas.html */; };
@@ -315,8 +314,7 @@
 		149A4AAA18ADC7EF004F5DEF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		149A4AAC18ADC7EF004F5DEF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		149A4AAF18ADC7EF004F5DEF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DisasterHelperTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		149A4ABA18ADC7EF004F5DEF /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DisasterHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		149A4AC218ADC7F0004F5DEF /* DisasterHelperTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DisasterHelperTests-Info.plist"; sourceTree = "<group>"; };
 		149A4AC418ADC7F0004F5DEF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		149A4AC618ADC7F0004F5DEF /* DisasterHelperTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisasterHelperTests.h; sourceTree = "<group>"; };
@@ -364,8 +362,7 @@
 		364A8BE218C71FF9004C659F /* ViewMapMarker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewMapMarker.xib; path = "MainView/Map support/ViewMapMarker.xib"; sourceTree = "<group>"; };
 		364A8BEC18C7202B004C659F /* MDDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDDirectionService.h; path = MainView/Services/MDDirectionService.h; sourceTree = "<group>"; };
 		364A8BED18C7202B004C659F /* MDDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDDirectionService.m; path = MainView/Services/MDDirectionService.m; sourceTree = "<group>"; };
-		364EF3E0192C5AFC00450BC2 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		364EF3E2192C5B1100450BC2 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		364EF3E4192C6F5600450BC2 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		3662A12A18D7F5640037BAF6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3662A12F18D7F8940037BAF6 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = MainView/Weather/RootViewController.h; sourceTree = "<group>"; };
 		3662A13018D7F8940037BAF6 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = MainView/Weather/RootViewController.m; sourceTree = "<group>"; };
@@ -402,6 +399,7 @@
 		36DF461418D042F900560B59 /* DHSearchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DHSearchService.h; path = MainView/Services/DHSearchService.h; sourceTree = "<group>"; };
 		36DF461518D042F900560B59 /* DHSearchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DHSearchService.m; path = MainView/Services/DHSearchService.m; sourceTree = "<group>"; };
 		36EA87CD18D2D61900D7A1AA /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrow.png; path = "MainView/Map support/arrow.png"; sourceTree = "<group>"; };
+		36ED8555192C72F5003FA6A7 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		501041F718EA73D00033FFE1 /* guide.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = guide.html; path = "Tips Html/guide.html"; sourceTree = "<group>"; };
 		501041F918EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "DISASTER HELPER INSTRUCTIONAL GUIDE.html"; sourceTree = "<group>"; };
 		501041FB18EA760E0033FFE1 /* sdffas.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sdffas.html; sourceTree = "<group>"; };
@@ -623,7 +621,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				364EF3E1192C5AFC00450BC2 /* GoogleMaps.framework in Frameworks */,
+				36ED8556192C72F5003FA6A7 /* GoogleMaps.framework in Frameworks */,
 				3662A12B18D7F5640037BAF6 /* MapKit.framework in Frameworks */,
 				3677EF1118B31A7800DAC336 /* AVFoundation.framework in Frameworks */,
 				3677EF2718B31AD600DAC336 /* SystemConfiguration.framework in Frameworks */,
@@ -649,7 +647,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				149A4ABB18ADC7EF004F5DEF /* SenTestingKit.framework in Frameworks */,
 				149A4ABC18ADC7EF004F5DEF /* UIKit.framework in Frameworks */,
 				149A4ABD18ADC7EF004F5DEF /* Foundation.framework in Frameworks */,
 			);
@@ -683,7 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				149A4A9318ADC7EF004F5DEF /* DisasterHelper.app */,
-				149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.octest */,
+				149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -691,8 +688,8 @@
 		149A4A9518ADC7EF004F5DEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				364EF3E2192C5B1100450BC2 /* GoogleMaps.bundle */,
-				364EF3E0192C5AFC00450BC2 /* GoogleMaps.framework */,
+				36ED8555192C72F5003FA6A7 /* GoogleMaps.framework */,
+				364EF3E4192C6F5600450BC2 /* GoogleMaps.bundle */,
 				3662A12A18D7F5640037BAF6 /* MapKit.framework */,
 				3677EF2018B31AC200DAC336 /* libz.dylib */,
 				3677EF1E18B31ABA00DAC336 /* libicucore.dylib */,
@@ -709,7 +706,6 @@
 				149A4A9618ADC7EF004F5DEF /* UIKit.framework */,
 				149A4A9818ADC7EF004F5DEF /* Foundation.framework */,
 				149A4A9A18ADC7EF004F5DEF /* CoreGraphics.framework */,
-				149A4ABA18ADC7EF004F5DEF /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1281,8 +1277,8 @@
 			);
 			name = DisasterHelperTests;
 			productName = DisasterHelperTests;
-			productReference = 149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 149A4AB918ADC7EF004F5DEF /* DisasterHelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -1290,6 +1286,7 @@
 		149A4A8B18ADC7EF004F5DEF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Tan (Tharin) T.NGUYEN";
 			};
@@ -1483,7 +1480,7 @@
 				501041FC18EA760E0033FFE1 /* sdffas.html in Resources */,
 				501041FE18EA76350033FFE1 /* adf.html in Resources */,
 				50C20E6018EBE8F80049776D /* back-arrow.png in Resources */,
-				364EF3E3192C5B1100450BC2 /* GoogleMaps.bundle in Resources */,
+				364EF3E5192C6F5600450BC2 /* GoogleMaps.bundle in Resources */,
 				50C20E6218EBEDCA0049776D /* navigator-bar.png in Resources */,
 				50B5A3CE18EC2225009A43F3 /* chat.png in Resources */,
 				50EBFEE118ED4E3300CDC4EA /* iPhone-Icon1.png in Resources */,
@@ -1719,6 +1716,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)",
+					"/Users/tu.tran/Downloads/GoogleMaps-iOS-1.8.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DisasterHelper/DisasterHelper-Prefix.pch";
@@ -1736,6 +1734,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)",
+					"/Users/tu.tran/Downloads/GoogleMaps-iOS-1.8.1",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DisasterHelper/DisasterHelper-Prefix.pch";
@@ -1753,13 +1752,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DisasterHelper/DisasterHelper-Prefix.pch";
 				INFOPLIST_FILE = "DisasterHelperTests/DisasterHelperTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -1770,13 +1769,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DisasterHelper/DisasterHelper-Prefix.pch";
 				INFOPLIST_FILE = "DisasterHelperTests/DisasterHelperTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

@@ -145,15 +145,14 @@
         NSLog(@"Run with out network and you can't search any thing");
         
     } else if([internetStatus isEqualToString:@"YES"]) {
-        [inputField resignFirstResponder];
-        SEL sel = @selector(addMarker);
-        //[self performSelector:@selector(addMarker)];
+        if (![inputField.text isEqualToString:@""]) {
+            SEL sel = @selector(addMarker);
+            //[self performSelector:@selector(addMarker)];
+            NSLog(@"%@",NSStringFromSelector(sel));
+            [gs geocodeAddress:inputField.text withCallback:@selector(addMarker) withDelegate:self];
+        }
         
-        NSLog(@"%@",NSStringFromSelector(sel));
-        [gs geocodeAddress:inputField.text withCallback:@selector(addMarker) withDelegate:self];
     }
-    
-    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -179,6 +178,7 @@
     
     mapView.region = centerRegion;
     
+    inputField.text=nil;
     // center the region around this map item's coordinate
     // self.mapView.centerCoordinate = markercoor;
     

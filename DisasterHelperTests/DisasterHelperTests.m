@@ -28,7 +28,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in DisasterHelperTests");
+    XCTFail(@"Unit tests are not implemented yet in DisasterHelperTests");
 }
 
 @end

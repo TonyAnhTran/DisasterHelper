@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Tan (Tharin) T.NGUYEN. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface DisasterHelperTests : SenTestCase
+@interface DisasterHelperTests : XCTestCase
 
 @end

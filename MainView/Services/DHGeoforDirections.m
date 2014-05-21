@@ -51,19 +51,22 @@
      //   NSLog(@"json is: %@", json);
     
     NSArray* results = [json objectForKey:@"results"];
-    NSDictionary *result = [results objectAtIndex:0];
-    NSString *address = [result objectForKey:@"formatted_address"];
-    NSDictionary *geometry = [result objectForKey:@"geometry"];
-    NSDictionary *location = [geometry objectForKey:@"location"];
-    
-    NSString *lat = [location objectForKey:@"lat"];
-    NSString *lng = [location objectForKey:@"lng"];
-
-    NSDictionary *gc = [[NSDictionary alloc]initWithObjectsAndKeys:lat,@"lat",lng,@"lng",address,@"address",nil];
-    
-        geocode = gc;
-        [delegate performSelector:sel];
-       // NSLog(@"geo is : %@",geocode);
+        if (results.count>0) {
+            NSDictionary *result = [results objectAtIndex:0];
+            NSString *address = [result objectForKey:@"formatted_address"];
+            NSDictionary *geometry = [result objectForKey:@"geometry"];
+            NSDictionary *location = [geometry objectForKey:@"location"];
+            
+            NSString *lat = [location objectForKey:@"lat"];
+            NSString *lng = [location objectForKey:@"lng"];
+            
+            NSDictionary *gc = [[NSDictionary alloc]initWithObjectsAndKeys:lat,@"lat",lng,@"lng",address,@"address",nil];
+            
+            geocode = gc;
+            [delegate performSelector:sel];
+            // NSLog(@"geo is : %@",geocode);
+        }
+   
    
     }
     @catch(NSException *e){
