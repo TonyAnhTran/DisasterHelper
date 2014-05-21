@@ -43,10 +43,9 @@
     
     @try{
     NSError* error;
-    NSDictionary *json = [NSJSONSerialization
-             JSONObjectWithData:data
-             options:kNilOptions
-             error:&error];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:kNilOptions
+                                                           error:&error];
         
      //   NSLog(@"json is: %@", json);
     

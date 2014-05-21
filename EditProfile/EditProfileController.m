@@ -173,7 +173,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [myDictionary setObject:ssid forKey:@"sid"];
             [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
             
-            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                             options:kNilOptions
+                                                               error:nil];
             
             
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -188,7 +190,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
             //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
             //NSLog(@"This is data %@",responseString);
-            NSDictionary *resultData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
+            NSDictionary *resultData = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                       options:kNilOptions
+                                                                         error:&err];
             // NSLog(@"Response Data is %@",responseDictionary);
             //NSLog(@"msg is %@", [responseDictionary objectForKey:@"msg"]);
             NSString *result= [resultData objectForKey:@"username"];
@@ -280,7 +284,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         [newDictionary setObject:userNameTextField.text forKey:@"username"];
                         [newDictionary setObject:phoneNumber forKey:@"phonenumber"];
                         
-                        NSData *myData = [NSJSONSerialization dataWithJSONObject:newDictionary options:kNilOptions error:nil];
+                        NSData *myData = [NSJSONSerialization dataWithJSONObject:newDictionary
+                                                                         options:kNilOptions
+                                                                           error:nil];
                         
                         Server *connect = [[Server alloc] init];
                         NSString *result = [connect postRequest:url withData:myData];
@@ -320,7 +326,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         //[newDictionary setObject:userNameTextField.text forKey:@"username"];
                         [newDictionary setObject:phoneNumber forKey:@"phonenumber"];
                         
-                        NSData *myData = [NSJSONSerialization dataWithJSONObject:newDictionary options:kNilOptions error:nil];
+                        NSData *myData = [NSJSONSerialization dataWithJSONObject:newDictionary
+                                                                         options:kNilOptions
+                                                                           error:nil];
                         
                         Server *connect = [[Server alloc] init];
                         NSString *result = [connect postRequest:url withData:myData];
@@ -362,7 +370,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                             [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                             [myDictionary setObject:oldPasswordImage.text forKey:@"newpassword"];
                             
-                            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+                            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                             options:kNilOptions
+                                                                               error:nil];
                             
                             Server *connect = [[Server alloc] init];
                             NSString *result = [connect postRequest:url withData:myData];

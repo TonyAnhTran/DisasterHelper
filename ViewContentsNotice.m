@@ -131,7 +131,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [myDictionary setObject:ssid forKey:@"sid"];
                 [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                 
-                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                 options:kNilOptions
+                                                                   error:nil];
                 
                 NewServer *connect = [[NewServer alloc] init];
                 returnFromNewser = [connect postRequest:url withData:myData];
@@ -244,7 +246,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [myDictionary setObject:replyTextField.text forKey:@"content"];
             [myDictionary setObject:currentNotice.noticeId forKey:@"msg_id"];
         
-            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                             options:kNilOptions
+                                                               error:nil];
         
             Server *connect = [[Server alloc] init];
             NSString *result = [connect postRequest:url withData:myData];

@@ -332,7 +332,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                     [myDictionary setObject:phone forKey:@"targetphone"];
                     
-                    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+                    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                     options:kNilOptions
+                                                                       error:nil];
                     Server *connect = [[Server alloc]init];
                     NSString *result=[connect postRequest:url withData:myData];
                     if ([result isEqualToString:@"Found user!"]) {
@@ -382,7 +384,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                     [myDictionary setObject:phone forKey:@"targetphone"];
                     
-                    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+                    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                     options:kNilOptions
+                                                                       error:nil];
                     Server *connect = [[Server alloc]init];
                     NSString *result=[connect postRequest:url withData:myData];
                     if ([result isEqualToString:@"Found user!"]) {
@@ -643,7 +647,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         [myDictionary setObject:phoneUser1.text forKey:@"econtact1"];
                         [myDictionary setObject:phoneUser2.text forKey:@"econtact2"];
                         [myDictionary setObject:phoneUser3.text forKey:@"econtact3"];
-                        NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
+                        NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                         options:kNilOptions
+                                                                           error:nil];
                         
                         Server *connect = [[Server alloc] init];
                         NSString *result = [connect postRequest:url withData:myData];
