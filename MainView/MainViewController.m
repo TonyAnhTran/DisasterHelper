@@ -1020,7 +1020,7 @@ NSInteger secondsCount = 30;
                 
                 //    NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
                 NewServer *connect = [[NewServer alloc] init];
-                NSArray *data = [connect postRequest:url withData:myData1];
+                NSArray *data = [[connect postRequest:url withData:myData1] mutableCopy];
                 
                 //   NSLog(@"data %@",data);
                 

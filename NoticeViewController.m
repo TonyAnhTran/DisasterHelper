@@ -92,7 +92,7 @@ NSString *bx;
                                                              options:kNilOptions
                                                                error:nil];
             NewServer *connect = [[NewServer alloc] init];
-            NSMutableArray *returnFromNewser=[connect postRequest:url withData:myData];
+            NSMutableArray *returnFromNewser=[[connect postRequest:url withData:myData] mutableCopy];
             
             NSLog(@"%@",returnFromNewser);
             int length =[returnFromNewser count];

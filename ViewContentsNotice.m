@@ -136,7 +136,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                    error:nil];
                 
                 NewServer *connect = [[NewServer alloc] init];
-                returnFromNewser = [connect postRequest:url withData:myData];
+                returnFromNewser = [[connect postRequest:url withData:myData]mutableCopy];
                 
             }else{
                 //Display user here

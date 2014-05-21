@@ -218,7 +218,7 @@ NSInteger contactIndex;
         else if ([check isEqualToString:@"LOGIN"]){
             NSArray *contactFromServerArray = [[NSArray alloc] init];
             connect = [[Server alloc]init];
-            contactFromServerArray = [connect getRequest:url];
+            contactFromServerArray = [[connect getRequest:url]mutableCopy];
             
             //get all contact from iphone
             CFErrorRef err;

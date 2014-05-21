@@ -43,7 +43,7 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
       [url appendString:[waypoints objectAtIndex:i]];
     }
   }
-    url = [url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+    url = [[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] mutableCopy];
     _directionsURL = [NSURL URLWithString:url];
     NSLog(@"direction url is :%@",_directionsURL);
   [self retrieveDirections:selector withDelegate:delegate];
@@ -56,6 +56,7 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
     });
 }
 
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 - (void)fetchedData:(NSData *)data
        withSelector:(SEL)selector
        withDelegate:(id)delegate{

@@ -39,6 +39,8 @@
     });
     
 }
+
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 - (void)fetchedData:(NSData *)data withCallback:(SEL)sel withDelegate:(id)delegate{
     
     @try{

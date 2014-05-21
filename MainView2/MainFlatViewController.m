@@ -588,7 +588,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
         audioPlayer.numberOfLoops = -1;
         if (audioPlayer == nil) {
-            NSLog([error description]);
+            NSLog(@"%@",[error description]);
         } else {
             [audioPlayer play];
             [self setTimer];
