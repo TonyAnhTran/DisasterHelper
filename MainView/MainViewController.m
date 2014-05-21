@@ -63,9 +63,12 @@ NSInteger secondsCount = 30;
 
 @synthesize sp,gs,userLocation,currentLocation,locationManager;
 
+#pragma mark - Lifecircle
 
-
-
+//Add "Back" navigation bar
+-(void)back {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)loadView
 {
     [super loadView];
@@ -189,26 +192,6 @@ NSInteger secondsCount = 30;
 }
 
 
-//resize image method, using for resize image to upload to server and resize victim avatar
--(UIImage*)imageWithImage:(UIImage*)image
-             scaledToSize:(CGSize)newSize;
-{
-    UIGraphicsBeginImageContext( newSize );
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
-
-
-//Add "Back" navigation bar
--(void)back {
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 - (void)viewDidLoad {
     
     //Customize back button arrow in navigation bar
@@ -253,7 +236,140 @@ NSInteger secondsCount = 30;
     
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
+
+- (void)dealloc {
+    [mapView_ removeObserver:self
+                  forKeyPath:@"myLocation"
+                     context:NULL];
+}
+
+#pragma mark - Private method
+//Add directions and add polyline
+- (void)addDirections:(NSDictionary *)json {
+    NSDictionary *routes = [json objectForKey:@"routes"][0];
+    NSDictionary *route = [routes objectForKey:@"overview_polyline"];
+    NSString *overview_route = [route objectForKey:@"points"];
+    GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
+    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+    polyline.strokeWidth = 10.0f;
+    polyline.map = mapView_;
+    // NSLog(@"%@",overview_route);
+    
+    
+    // get directions data to print
+    // NSLog(@"%@",routes);
+    NSArray *display=[routes objectForKey:@"legs"];
+    NSDictionary *total=[display objectAtIndex:0];
+    NSDictionary *distance=[total objectForKey:@"distance"];
+    NSDictionary *duration=[total objectForKey:@"duration"];
+    NSArray *steps=[total objectForKey:@"steps"];
+    
+    
+    NSString *stringdistance =[distance objectForKey:@"text"];
+    NSString *stringduration=[duration objectForKey:@"text"];
+    NSString *stringstartpoint=[total objectForKey:@"start_address"];
+    NSString *stringdespoint=[total objectForKey:@"end_address"];
+    
+    NSString *directtype=@"driving";
+    NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
+    directtype =[setting valueForKey:@"DirectionsType"];
+    
+    //create text to print
+    NSString *Resultis=[NSString stringWithFormat:@"Start point: %@\nDestination point: %@\nTotal distance: %@\nTotal time: %@\nDirections type: %@",stringstartpoint,stringdespoint,stringdistance,stringduration,directtype];
+    //NSLog(@"%@",Resultis);
+    
+    //display alert view with directions data
+    UIAlertView *directions =[[UIAlertView alloc]initWithTitle:@"Directions result" message:Resultis delegate:nil cancelButtonTitle:@"See on map" otherButtonTitles:nil];
+    [directions show];
+    
+    
+    // Left alignment text in alert view
+    NSArray *subviewArray = directions.subviews;
+    for(int x = 0; x < [subviewArray count]; x++){
+        
+        if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
+            //UILabel *label = [subviewArray objectAtIndex:x];
+            //label.textAlignment = UITextAlignmentLeft;
+        }
+    }
+    
+    for (int i=0;i<[steps count];i++) {
+        
+        //Get step by step to directions
+        // NSLog(@"step test: %@",steps);
+        //NSDictionary *stepbystep=[steps objectAtIndex:i];
+        // NSLog(@"step test: %@",stepbystep);
+        //NSString *instructionsHtml=[stepbystep objectForKey:@"html_instructions"];
+        // NSLog(@"Step %i: %@",i,instructionsHtml);
+    }
+    
+}
+
+
+// Funtion to send location to server, but it not nescessary right now, because one funtion the same in MainFlatviewController.m did it
+-(void)sendlocationtoServer{
+    userLocation=[NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude];
+    
+    NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
+    NSString *userPhone =[phonenumber valueForKey:@"phone"];
+    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+    NSString *ssid=[session objectForKey:@"ssid"];
+    
+    NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
+    NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
+    NSURL *url= [[NSURL alloc] initWithString:stringurl];
+    
+    NSString *userlat = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+    NSString *userlong = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
+    
+    //get City name
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+    [geocoder reverseGeocodeLocation:currentLocation
+                   completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         if (error){
+             NSLog(@"Geocode failed with error: %@", error);
+             return;
+         }
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         // NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+         NSLog(@"locality %@",placemark.locality);
+         // NSLog(@"postalCode %@",placemark.postalCode);
+         
+     }];
+    @try{
+        NSMutableDictionary *myLocationDic = [[NSMutableDictionary alloc] init];
+        [myLocationDic setObject:@"updateLocation" forKey:@"key"];
+        [myLocationDic setObject:ssid forKey:@"sid"];
+        [myLocationDic setObject:userPhone forKey:@"phonenumber"];
+        [myLocationDic setObject:userlat forKey:@"latitude"];
+        [myLocationDic setObject:userlong forKey:@"longitude"];
+        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic
+                                                         options:kNilOptions
+                                                           error:nil];
+        
+        
+        //        NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
+        Server *connect = [[Server alloc] init];
+        [connect postRequest:url withData:myData];
+    }
+    
+    @catch(NSException *e){
+        UIAlertView *searchAlert=[[UIAlertView alloc] initWithTitle:@"Connection Error"
+                                                            message:@"Can't update location to server."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles: nil];
+        [searchAlert show];
+    }
+    @finally{}
+}
 //Get directions by long press at mapview
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
@@ -298,209 +414,30 @@ NSInteger secondsCount = 30;
                        withSelector:selector
                        withDelegate:self];
         }
-
-    }
         
+    }
+    
 }
 
-
-
-//Add directions and add polyline
-- (void)addDirections:(NSDictionary *)json {
-    NSDictionary *routes = [json objectForKey:@"routes"][0];
-    NSDictionary *route = [routes objectForKey:@"overview_polyline"];
-    NSString *overview_route = [route objectForKey:@"points"];
-    GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
-    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-    polyline.strokeWidth = 10.0f;
-    polyline.map = mapView_;
-   // NSLog(@"%@",overview_route);
+//resize image method, using for resize image to upload to server and resize victim avatar
+-(UIImage*)imageWithImage:(UIImage*)image
+             scaledToSize:(CGSize)newSize;
+{
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
-    
-// get directions data to print
-   // NSLog(@"%@",routes);
-    NSArray *display=[routes objectForKey:@"legs"];
-    NSDictionary *total=[display objectAtIndex:0];
-    NSDictionary *distance=[total objectForKey:@"distance"];
-    NSDictionary *duration=[total objectForKey:@"duration"];
-    NSArray *steps=[total objectForKey:@"steps"];
-    
-    
-    NSString *stringdistance =[distance objectForKey:@"text"];
-    NSString *stringduration=[duration objectForKey:@"text"];
-    NSString *stringstartpoint=[total objectForKey:@"start_address"];
-    NSString *stringdespoint=[total objectForKey:@"end_address"];
-
-    NSString *directtype=@"driving";
-    NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
-    directtype =[setting valueForKey:@"DirectionsType"];
-    
-//create text to print
-    NSString *Resultis=[NSString stringWithFormat:@"Start point: %@\nDestination point: %@\nTotal distance: %@\nTotal time: %@\nDirections type: %@",stringstartpoint,stringdespoint,stringdistance,stringduration,directtype];
-    //NSLog(@"%@",Resultis);
-    
-//display alert view with directions data
-    UIAlertView *directions =[[UIAlertView alloc]initWithTitle:@"Directions result" message:Resultis delegate:nil cancelButtonTitle:@"See on map" otherButtonTitles:nil];
-    [directions show];
-    
-    
-// Left alignment text in alert view
-    NSArray *subviewArray = directions.subviews;
-    for(int x = 0; x < [subviewArray count]; x++){
-        
-        if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
-            //UILabel *label = [subviewArray objectAtIndex:x];
-            //label.textAlignment = UITextAlignmentLeft;
-            }
-        }
-    
-    for (int i=0;i<[steps count];i++) {
-        
-//Get step by step to directions
-    // NSLog(@"step test: %@",steps);
-    //NSDictionary *stepbystep=[steps objectAtIndex:i];
-   // NSLog(@"step test: %@",stepbystep);
-    //NSString *instructionsHtml=[stepbystep objectForKey:@"html_instructions"];
-   // NSLog(@"Step %i: %@",i,instructionsHtml);
-    }
-
+    return newImage;
 }
 
-// Funtion to send location to server, but it not nescessary right now, because one funtion the same in MainFlatviewController.m did it
--(void)sendlocationtoServer{
-    userLocation=[NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude];
-    
-    NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
-    NSString *userPhone =[phonenumber valueForKey:@"phone"];
-    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
-    NSString *ssid=[session objectForKey:@"ssid"];
-    
-    NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
-    NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
-    NSURL *url= [[NSURL alloc] initWithString:stringurl];
-    
-    NSString *userlat = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
-    NSString *userlong = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
-    
-    //get City name
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:currentLocation
-                   completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         if (error){
-             NSLog(@"Geocode failed with error: %@", error);
-             return;
-         }
-         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        // NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
-         NSLog(@"locality %@",placemark.locality);
-        // NSLog(@"postalCode %@",placemark.postalCode);
-         
-     }];
-    @try{
-        NSMutableDictionary *myLocationDic = [[NSMutableDictionary alloc] init];
-        [myLocationDic setObject:@"updateLocation" forKey:@"key"];
-        [myLocationDic setObject:ssid forKey:@"sid"];
-        [myLocationDic setObject:userPhone forKey:@"phonenumber"];
-        [myLocationDic setObject:userlat forKey:@"latitude"];
-        [myLocationDic setObject:userlong forKey:@"longitude"];
-        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic
-                                                         options:kNilOptions
-                                                           error:nil];
-        
-        
-//        NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
-        Server *connect = [[Server alloc] init];
-        [connect postRequest:url withData:myData];
-    }
-    
-    @catch(NSException *e){
-        UIAlertView *searchAlert=[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                            message:@"Can't update location to server."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles: nil];
-        [searchAlert show];
-    }
-    @finally{}
-}
-
-
-
-- (void)dealloc {
-    [mapView_ removeObserver:self
-                  forKeyPath:@"myLocation"
-                     context:NULL];
-}
-
-#pragma mark - KVO updates
-
-//set default camera position is current location when load map 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    if (!firstLocationUpdate_) {
-        // If the first location update has not yet been recieved, then jump to that
-        // location.
-        firstLocationUpdate_ = YES;
-        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:12];
-    }
-   currentLocation = mapView_.myLocation;
-    }
-
-
-// Clear current map view
-- (IBAction)clear:(id)sender {
+-(void)clearmapdata{
     [mapView_ clear];
     [waypoints_ removeAllObjects];
     [waypointStrings_ removeAllObjects];
     [victimArray removeAllObjects];
     
 }
--(void)clearmapdata{
-    [victimArray removeAllObjects];
-}
-
-//Search for a lot of place when click on button
-- (IBAction)searchplace:(id)sender {
-    [addressField resignFirstResponder];
-//    SEL sel = @selector(addMarkerbySearch);
-//    //[self performSelector:@selector(addMarkerbySearch)];
-//    
-//    NSLog(@"%@",NSStringFromSelector(sel));
-    [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
-    NSLog(@"You are searching for : %@ ",addressField.text);
-    addressField.text=@"";
-    
-}
-
-// Search one adress
-- (IBAction)geocode:(id)sender {
-    [addressField resignFirstResponder];
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-   	NSString *internetStatus=[user objectForKey:@"Internet"];
-    
-    if ([internetStatus isEqualToString:@"NO"]) {
-        NSLog(@"Run with out network and can search geocoder");
-    } else if([internetStatus isEqualToString:@"YES"]) {
-        SEL sel = @selector(addMarkerbyGeocoding);
-        //[self performSelector:@selector(addMarker)];
-        
-        NSLog(@"%@",NSStringFromSelector(sel));
-        [gs geocodeAddress:addressField.text withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
-    }
-    
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
-}
-
 
 // Add marker with result from server by click on search button
 - (void)addMarkerbySearch {
@@ -521,8 +458,8 @@ NSInteger secondsCount = 30;
     marker.map = mapView_;
     
     markerlocation=[NSString stringWithFormat:@"%f,%f",lat,lng];
-   // GMSCameraUpdate *searchLocateCam = [GMSCameraUpdate setTarget:searchlocation zoom:16.0];
-   // [mapView_ animateWithCameraUpdate:searchLocateCam];
+    // GMSCameraUpdate *searchLocateCam = [GMSCameraUpdate setTarget:searchlocation zoom:16.0];
+    // [mapView_ animateWithCameraUpdate:searchLocateCam];
     NSLog(@"Current place's coordinate is: %f,%f",searchlocation.latitude, searchlocation.longitude, nil);
     
 }
@@ -543,7 +480,7 @@ NSInteger secondsCount = 30;
     markerlocation=[NSString stringWithFormat:@"%f,%f",lat,lng];
     GMSCameraUpdate *geoLocateCam = [GMSCameraUpdate setTarget:geolocation zoom:16.0];
     [mapView_ animateWithCameraUpdate:geoLocateCam];
-   // NSLog(@"Current place's coordinate is: %f,%f",geolocation.latitude, geolocation.longitude, nil);
+    // NSLog(@"Current place's coordinate is: %f,%f",geolocation.latitude, geolocation.longitude, nil);
     
 }
 
@@ -558,7 +495,7 @@ NSInteger secondsCount = 30;
     marker.position = geolocation;
     marker.title = @"This place is:";
     marker.snippet= [gs.geocode objectForKey:@"address"];
-   // marker.icon = [UIImage imageNamed:@"arrow.png"];
+    // marker.icon = [UIImage imageNamed:@"arrow.png"];
     marker.map = mapView_;
     
 }
@@ -580,6 +517,66 @@ NSInteger secondsCount = 30;
 ////    }
 //return InfoWindow;
 //}
+
+-(void)callDirectionsPopup{
+    
+    prompt = [[UIAlertView alloc] initWithTitle:@"Get directions"
+                                        message:@"Input Start and Destination point here."
+                                       delegate:self
+                              cancelButtonTitle:@"Cancel"
+                              otherButtonTitles: @"Ok",nil];
+    
+    [prompt show];
+    CGFloat height = 25.0;
+    
+    UILabel *msgLabel = [[prompt subviews] objectAtIndex:0];
+    
+    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(msgLabel.frame.origin.x, msgLabel.frame.origin.y+msgLabel.frame.size.height, msgLabel.frame.size.width, height)];
+    textField1.placeholder=@"Start point";
+    [textField1 setBackgroundColor:[UIColor whiteColor]];
+    textField2 = [[UITextField alloc] initWithFrame:CGRectOffset(textField1.frame, 0, height + 4)];
+    textField2.placeholder=@"Destination point";
+    [textField2 setBackgroundColor:[UIColor whiteColor]];
+    
+    NSArray *followringSubviews = [[prompt subviews] subarrayWithRange:NSMakeRange(3, [[prompt subviews] count] - 3)];
+    [followringSubviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+        view.frame = CGRectOffset(view.frame, 0, 3*height);
+        
+    }];
+    [prompt addSubview:textField1];
+    [prompt addSubview:textField2];
+    
+    textField1.delegate = self;
+    textField2.delegate = self;
+    prompt.frame = CGRectUnion(prompt.frame, CGRectOffset(prompt.frame, 0, 80));
+    [textField1 resignFirstResponder];
+    [textField2 resignFirstResponder];
+}
+
+#pragma mark - KVO updates
+
+//set default camera position is current location when load map
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if (!firstLocationUpdate_) {
+        // If the first location update has not yet been recieved, then jump to that
+        // location.
+        firstLocationUpdate_ = YES;
+        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                         zoom:12];
+    }
+   currentLocation = mapView_.myLocation;
+    }
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
 
 // Set action when click on map Marker
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker*)marker
@@ -609,6 +606,14 @@ NSInteger secondsCount = 30;
         }
 }
 
+
+#pragma mark - Actions
+
+// Clear current map view
+- (IBAction)clear:(id)sender {
+    [self clearmapdata];
+    
+}
 // my location button
 - (IBAction)geosv:(id)sender {
     CLLocation *location = mapView_.myLocation;
@@ -620,14 +625,44 @@ NSInteger secondsCount = 30;
     
 }
 
+//Search for a lot of place when click on button
+- (IBAction)searchplace:(id)sender {
+    [addressField resignFirstResponder];
+    //    SEL sel = @selector(addMarkerbySearch);
+    //    //[self performSelector:@selector(addMarkerbySearch)];
+    //
+    //    NSLog(@"%@",NSStringFromSelector(sel));
+    [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
+    NSLog(@"You are searching for : %@ ",addressField.text);
+    addressField.text=@"";
+    
+}
+
+// Search one adress
+- (IBAction)geocode:(id)sender {
+    [addressField resignFirstResponder];
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+   	NSString *internetStatus=[user objectForKey:@"Internet"];
+    
+    if ([internetStatus isEqualToString:@"NO"]) {
+        NSLog(@"Run with out network and can search geocoder");
+    } else if([internetStatus isEqualToString:@"YES"]) {
+        SEL sel = @selector(addMarkerbyGeocoding);
+        //[self performSelector:@selector(addMarker)];
+        
+        NSLog(@"%@",NSStringFromSelector(sel));
+        [gs geocodeAddress:addressField.text withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
+    }
+    
+}
+
+
 //Dismiss keyboard when click on "Return", search place, geocoding, search victims
 - (IBAction)dismissKeyboard:(id)sender {
+    [self clearmapdata];
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString *internetStatus=[user objectForKey:@"Internet"];
-    [mapView_ clear];
-    [waypoints_ removeAllObjects];
-    [waypointStrings_ removeAllObjects];
-
     if (addressField.text.length<1) {
         [addressField resignFirstResponder];
     } else {
@@ -954,11 +989,6 @@ NSInteger secondsCount = 30;
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 // Change map type between "Hybrid" and "Normal"
 - (IBAction)changerMaptype:(id)sender {
@@ -972,10 +1002,7 @@ NSInteger secondsCount = 30;
 
 // Get and display victims with adress data when click on that button
 - (IBAction)Getvictim:(id)sender {
-    [mapView_ clear];
-    [waypoints_ removeAllObjects];
-    [waypointStrings_ removeAllObjects];
-    [victimArray removeAllObjects];
+   [self clearmapdata];
 //    NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
 //    victimArray =[victimData valueForKey:@"victimdata"];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -1148,39 +1175,8 @@ NSInteger secondsCount = 30;
     [mapView_ clear];
     [waypoints_ removeAllObjects];
     [waypointStrings_ removeAllObjects];
-    
-    prompt = [[UIAlertView alloc] initWithTitle:@"Get directions"
-                                                        message:@"Input Start and Destination point here."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles: @"Ok",nil];
-      
-    [prompt show];
-    CGFloat height = 25.0;
-    
-    UILabel *msgLabel = [[prompt subviews] objectAtIndex:2];
-    
-    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(msgLabel.frame.origin.x, msgLabel.frame.origin.y+msgLabel.frame.size.height, msgLabel.frame.size.width, height)];
-    textField1.placeholder=@"Start point";
-    [textField1 setBackgroundColor:[UIColor whiteColor]];
-    textField2 = [[UITextField alloc] initWithFrame:CGRectOffset(textField1.frame, 0, height + 4)];
-    textField2.placeholder=@"Destination point";
-    [textField2 setBackgroundColor:[UIColor whiteColor]];
-    
-    NSArray *followringSubviews = [[prompt subviews] subarrayWithRange:NSMakeRange(3, [[prompt subviews] count] - 3)];
-    [followringSubviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-        view.frame = CGRectOffset(view.frame, 0, 3*height);
-        
-    }];
-    [prompt addSubview:textField1];
-    [prompt addSubview:textField2];
-    
-    textField1.delegate = self;
-    textField2.delegate = self;
-    prompt.frame = CGRectUnion(prompt.frame, CGRectOffset(prompt.frame, 0, 80));
-    [textField1 resignFirstResponder];
-    [textField2 resignFirstResponder];
- 
-}
+    [self callDirectionsPopup];
+
+ }
 
 @end
