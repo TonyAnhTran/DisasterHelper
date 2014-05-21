@@ -140,7 +140,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                 [myDictionary setObject:newPassword forKey:@"newpassword"];
                 
-                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
                 
                 Server *connect = [[Server alloc] init];
                 NSString *result = [connect postRequest:url withData:myData];

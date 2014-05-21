@@ -63,7 +63,7 @@
                 
                 //          NSError* error;
                 NSData *myData1 = [NSJSONSerialization dataWithJSONObject:myVictimlist
-                                                                  options:NSJSONReadingMutableContainers
+                                                                  options:kNilOptions
                                                                     error:nil];
                 // NSLog(@"Mydata1: %@",myData1);
                 

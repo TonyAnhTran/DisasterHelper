@@ -181,7 +181,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [myDictionary setObject:phoneString forKey:@"phonenumber"];
                 
                 NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
-                                                                 options:NSJSONReadingMutableContainers
+                                                                 options:kNilOptions
                                                                    error:nil];
                 
                 

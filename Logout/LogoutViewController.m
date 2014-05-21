@@ -106,7 +106,7 @@ NSInteger static compareViewsByOrigin(id sp1, id sp2, void *context)
                 [myDictionary setObject:ssid forKey:@"sid"];
                 [myDictionary setObject:[user valueForKey:@"phone"] forKey:@"phonenumber"];
                 
-                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
                 
                 Server *connect = [[Server alloc] init];
                 NSString *result = [connect postRequest:url withData:myData];

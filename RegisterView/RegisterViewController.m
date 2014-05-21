@@ -189,7 +189,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [myDictionary setObject:phoneString forKey:@"phonenumber"];
             
             
-            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
             NSString *myString = [[NSString alloc] initWithData:myData encoding:NSUTF8StringEncoding];
             NSLog(@"%@",myString);
             

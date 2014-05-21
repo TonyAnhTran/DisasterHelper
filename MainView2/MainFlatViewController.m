@@ -109,7 +109,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [myDictionary setObject:ssid forKey:@"sid"];
                 [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                 
-                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
                 
                 
                 NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -533,7 +533,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [myLocationDic setObject:ssid forKey:@"sid"];
         [myLocationDic setObject:userlat forKey:@"latitude"];
         [myLocationDic setObject:userlong forKey:@"longitude"];
-        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic options:NSJSONReadingMutableContainers error:nil];
+        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic options:kNilOptions error:nil];
         
         
         NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
@@ -625,7 +625,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [myDictionary setObject:ssid forKey:@"sid"];
                 [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
                 
-                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+                NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
                 
                 Server *connect = [[Server alloc] init];
                 NSString *result = [connect postRequest:url withData:myData];
@@ -727,7 +727,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
               [myDictionary setObject:latAtt forKey:@"latitude"];
               [myDictionary setObject:longAtt forKey:@"longitude"];
               
-              NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+              NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
               
               Server *connect = [[Server alloc] init];
               NSString *result = [connect postRequest:url withData:myData];
@@ -853,7 +853,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [myDictionary setObject:latAtt forKey:@"latitude"];
     [myDictionary setObject:longAtt forKey:@"longitude"];
     
-    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:kNilOptions error:nil];
     
     Server *connect = [[Server alloc] init];
     NSString *result = [connect postRequest:url withData:myData];

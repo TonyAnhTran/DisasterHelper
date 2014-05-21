@@ -88,7 +88,9 @@ NSString *bx;
             [myDictionary setObject:ssid forKey:@"sid"];
             [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
             
-            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary options:NSJSONReadingMutableContainers error:nil];
+            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                             options:kNilOptions
+                                                               error:nil];
             NewServer *connect = [[NewServer alloc] init];
             NSMutableArray *returnFromNewser=[connect postRequest:url withData:myData];
             
@@ -101,6 +103,7 @@ NSString *bx;
                 //Get infomation and add to notice array
                 for (int i=0; i<length; i++) {
                     AppDelegate *noticeUser = [[AppDelegate alloc]init];
+                    
                     NSString *phone = [[returnFromNewser objectAtIndex:i]valueForKey:@"victimphone"];
                     NSString *contents= [[returnFromNewser objectAtIndex:i]valueForKey:@"content"];
                     NSString *date= [[returnFromNewser objectAtIndex:i]valueForKey:@"created_at"];
