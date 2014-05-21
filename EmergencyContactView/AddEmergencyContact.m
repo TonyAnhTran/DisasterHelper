@@ -221,7 +221,8 @@ NSInteger contactIndex;
             contactFromServerArray = [connect getRequest:url];
             
             //get all contact from iphone
-            ABAddressBookRef addressBook = ABAddressBookCreate();
+            CFErrorRef err;
+            ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL,&err);
             CFArrayRef addressBookData = ABAddressBookCopyArrayOfAllPeople(addressBook);
             
             CFIndex count = CFArrayGetCount(addressBookData);
