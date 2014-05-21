@@ -26,6 +26,16 @@
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) NSString *userLocation;
 
+@property (strong, nonatomic) IBOutlet UIView *popUpView;
+@property (strong, nonatomic) IBOutlet UILabel *popUpTitle;
+@property (strong, nonatomic) IBOutlet UILabel *popUpSky;
+@property (strong, nonatomic) IBOutlet UILabel *popUpTemp;
+@property (strong, nonatomic) IBOutlet UILabel *popUpRange;
+@property (strong, nonatomic) IBOutlet UILabel *popUpHumidity;
+@property (strong, nonatomic) IBOutlet UILabel *popUpPressure;
+@property (strong, nonatomic) IBOutlet UILabel *popUpWind;
+- (IBAction)popUpOk:(id)sender;
+
 - (IBAction)ChangeUnit:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;
 - (IBAction)MydetailWeather:(id)sender;

@@ -34,6 +34,9 @@
 - (void)viewDidLoad
 {
     //Custom navigator back button
+    self.popUpView.hidden=YES;
+    self.popUpView.layer.cornerRadius = 5;
+    self.popUpView.layer.masksToBounds = YES;
     
     UIImage *buttonImage = [UIImage imageNamed:@"back111.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -188,9 +191,11 @@
 }
 
 - (IBAction)MydetailWeather:(id)sender {
+    self.popUpView.hidden=NO;
+    
     NSError* error;
-    NSString *latwea =[NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
-    NSString *lngwea =[NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
+    NSString *latwea =[NSString stringWithFormat:@"%f",mapView.region.center.latitude];
+    NSString *lngwea =[NSString stringWithFormat:@"%f",mapView.region.center.longitude];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
    	NSString *internetStatus=[user objectForKey:@"Internet"];
     
@@ -220,11 +225,11 @@
             // NSLog(@"Test 4: %@",json);
             NSArray *weather = [json objectForKey:@"weather"];
             NSDictionary *weather1 = [weather objectAtIndex:0];
-            NSString *mainweather= [weather1 objectForKey:@"main"];
+        //    NSString *mainweather= [weather1 objectForKey:@"main"];
             NSString *maindescription= [weather1 objectForKey:@"description"];
             
             NSDictionary *wind = [json objectForKey:@"wind"];
-            NSString *windeg= [wind objectForKey:@"deg"];
+        //    NSString *windeg= [wind objectForKey:@"deg"];
             NSString *winspeed= [wind objectForKey:@"speed"];
             
             
@@ -247,90 +252,40 @@
             NSString *pressure= [temp objectForKey:@"temp_max"];
             NSString *humidity= [temp objectForKey:@"humidity"];
             
-            if ([unit isEqualToString:@"metric"]) {
-                NSString *labeltext= [NSString stringWithFormat:@"Sky: %@\nTemp: %i°C\nRange: %i°C-%i°C \nHumidity: %@%%\nPressure: %@ hpa\n\nWind speed: %@ m/s\nWind direction: %@°",maindescription,curenttempint,mintempint,maxtempint,humidity,pressure,winspeed,windeg];
-                UIAlertView *weatheralert =[[UIAlertView alloc]initWithTitle:@"Your location weather" message:labeltext delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                [weatheralert show];
-                
-                NSArray *subviewArray = weatheralert.subviews;
-                for(int x = 0; x < [subviewArray count]; x++){
-                    
-                    if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
-                        // UILabel *label = [subviewArray objectAtIndex:x];
-                        // label.textAlignment = UITextAlignmentLeft;
-                    }
-                }
-                
-            } else {
-                NSString *labeltext= [NSString stringWithFormat:@"Sky: %@\nTemp: %i°F\nRange: %i°F-%i°F \nHumidity: %@%%\nPressure: %@ hpa\n \nWind speed: %@ m/s\nWind direction: %@°",maindescription,curenttempint,mintempint,maxtempint,humidity,pressure,winspeed,windeg];
-                UIAlertView *weatheralert =[[UIAlertView alloc]initWithTitle:@"Your location weather" message:labeltext delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                [weatheralert show];
-                
-                NSArray *subviewArray = weatheralert.subviews;
-                for(int x = 0; x < [subviewArray count]; x++){
-                    
-                    if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
-                        UILabel *label = [subviewArray objectAtIndex:x];
-                        label.textAlignment = UITextAlignmentLeft;
-                    }
-                }
-                
-            }
+            self.popUpTitle.text=@"Map center's weather";
+            self.popUpSky.text=[NSString stringWithFormat:@"Sky: %@",maindescription];
             
+            if ([unit isEqualToString:@"metric"]) {
+                self.popUpTemp.text=[NSString stringWithFormat:@"Temp: %i°C",curenttempint];
+                self.popUpRange.text=[NSString stringWithFormat:@"Range: %i°C-%i°C",mintempint,maxtempint];
+            }
+            else{
+                self.popUpTemp.text=[NSString stringWithFormat:@"nTemp: %i°F",curenttempint];
+                  self.popUpRange.text=[NSString stringWithFormat:@"Range: %i°F-%i°F",mintempint,maxtempint];
+
+            }
+            self.popUpHumidity.text=[NSString stringWithFormat:@"Humidity: %@%%",humidity];
+            self.popUpPressure.text=[NSString stringWithFormat:@"Pressure: %@ hpa",pressure];
+            self.popUpWind.text=[NSString stringWithFormat:@"Wind speed: %@ m/s",winspeed];
+            
+
         }
         
         @catch (NSException *exception) {
-            NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
-            NSString *unit2=[setting  valueForKey:@"WeatherUnit2"];
-            // backup weather api
-            NSString *weatherUrl2 =[NSString stringWithFormat:@"http://www.myweather2.com/developer/forecast.ashx?uac=TRdO4RNAQt&output=json&temp_unit=%@&",unit2];
-            NSString *url2 = [NSString stringWithFormat:@"%@query=%@,%@",weatherUrl2,latwea,lngwea];
-            url2 = [url2 stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-            
-            NSLog(@"WEARHER URL :%@",url2);
-            NSURL *resulturl = [NSURL URLWithString:url2];
-            NSData *data = [NSData dataWithContentsOfURL: resulturl];
-            NSDictionary *json = [NSJSONSerialization
-                                  JSONObjectWithData:data
-                                  options:kNilOptions
-                                  error:&error];
-            
-            
-            
-            //        NSArray *weather = [json objectForKey:@"weather"];
-            //        NSDictionary *weather1 = [weather objectAtIndex:0];
-            //        NSString *mainweather= [weather1 objectForKey:@"main"];
-            //NSLog(@"test %@",mainweather);
-            
-            
-            NSDictionary *weather=[json objectForKey:@"weather"];
-            
-            NSDictionary *currentweather=[weather objectForKey:@"current_weather"];
-            // NSDictionary *currentweather=[currentweathe objectAtIndex:0];
-            NSString *currenttemp= [currentweather objectForKey:@"temp"];
-            NSString *humidity= [currentweather objectForKey:@"humidity"];
-            NSString *mainweather= [currentweather objectForKey:@"weather_text"];
-            
-            
-            NSArray *forecast=[weather objectForKey:@"forecast"];
-            
-            NSDictionary *todaydate=[forecast objectAtIndex:0];
-            
-            NSString *mintemp= [todaydate objectForKey:@"night_min_temp"];
-            NSString *maxtemp= [todaydate objectForKey:@"day_max_temp"];
-            
-            
-            NSString *labeltext= [NSString stringWithFormat:@"Sky: %@\nTemp: %@°\nRange: %@°-%@° \nHumidity: %@%%",mainweather,currenttemp,mintemp,maxtemp,humidity];
-            NSLog(@"label text %@",labeltext);
-            
-            
-            
+            UIAlertView *error=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Sorry, we can't get weather data in that place now, try again late" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [error show];
         }
         @finally {
         }
         
     }
 }
+
+- (IBAction)popUpOk:(id)sender {
+    self.popUpView.hidden=YES;
+    
+}
+
 - (IBAction)ChangeUnit:(id)sender {
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
    	NSString *internetStatus=[user objectForKey:@"Internet"];

@@ -983,7 +983,7 @@
                                     <outlet property="delegate" destination="2vY-DQ-MCT" id="S4c-hi-xm5"/>
                                 </connections>
                             </mapView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcC-AQ-K0d">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcC-AQ-K0d" userLabel="BttomLabel">
                                 <rect key="frame" x="1" y="447" width="319" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -991,7 +991,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jCW-TB-3i0">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jCW-TB-3i0" userLabel="myLocationBt">
                                 <rect key="frame" x="280" y="447" width="40" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.91836734693877553" green="0.91836734693877553" blue="0.91836734693877553" alpha="1" colorSpace="calibratedRGB"/>
@@ -1012,15 +1012,15 @@
                                     <action selector="dismissKeyboard:" destination="2vY-DQ-MCT" eventType="editingDidEndOnExit" id="AVZ-yg-VwZ"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xjT-Td-h5F">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xjT-Td-h5F" userLabel="moreDetailBt">
                                 <rect key="frame" x="43" y="447" width="238" height="33"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="More detail about your weather"/>
+                                <state key="normal" title="More weather details"/>
                                 <connections>
                                     <action selector="MydetailWeather:" destination="2vY-DQ-MCT" eventType="touchUpInside" id="Ih4-qY-jqp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zha-f2-vxJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zha-f2-vxJ" userLabel="unitBt">
                                 <rect key="frame" x="1" y="447" width="40" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.90816326530612246" green="0.90816326530612246" blue="0.90816326530612246" alpha="1" colorSpace="calibratedRGB"/>
@@ -1029,6 +1029,72 @@
                                     <action selector="ChangeUnit:" destination="2vY-DQ-MCT" eventType="touchUpInside" id="voN-Zx-fQC"/>
                                 </connections>
                             </button>
+                            <view alpha="0.89999999999999991" contentMode="scaleToFill" id="nEh-gR-641" userLabel="weatherPopupView">
+                                <rect key="frame" x="25" y="140" width="270" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TUp-f5-Ei9" userLabel="placeLabelWeather">
+                                        <rect key="frame" x="0.0" y="0.0" width="270" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.086274509799999996" green="0.66666666669999997" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sky:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vWD-TO-hDO">
+                                        <rect key="frame" x="20" y="35" width="217" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zG1-mz-BUO">
+                                        <rect key="frame" x="20" y="56" width="217" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Range:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="huJ-JU-21p">
+                                        <rect key="frame" x="20" y="77" width="217" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HHj-kf-fAx">
+                                        <rect key="frame" x="20" y="98" width="203" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dLj-UL-aMz">
+                                        <rect key="frame" x="20" y="119" width="203" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2xp-Bd-jEP">
+                                        <rect key="frame" x="20" y="140" width="250" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DF0-w5-vNe">
+                                        <rect key="frame" x="0.0" y="170" width="270" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="popUpOk:" destination="2vY-DQ-MCT" eventType="touchUpInside" id="Ar2-Z7-X3D"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1Ue-Cy-3bk">
+                                        <rect key="frame" x="0.0" y="169" width="270" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1040,6 +1106,14 @@
                         <outlet property="WeatherUnit" destination="zha-f2-vxJ" id="frQ-td-ku9"/>
                         <outlet property="inputField" destination="twf-65-S6b" id="kgx-8c-Z9y"/>
                         <outlet property="mapView" destination="fuW-QQ-iX0" id="Onu-0p-lKN"/>
+                        <outlet property="popUpHumidity" destination="HHj-kf-fAx" id="RcE-CU-dD6"/>
+                        <outlet property="popUpPressure" destination="dLj-UL-aMz" id="4i2-zo-KuO"/>
+                        <outlet property="popUpRange" destination="huJ-JU-21p" id="xuw-6g-amh"/>
+                        <outlet property="popUpSky" destination="vWD-TO-hDO" id="Nul-WL-MuU"/>
+                        <outlet property="popUpTemp" destination="zG1-mz-BUO" id="emL-k5-1SM"/>
+                        <outlet property="popUpTitle" destination="TUp-f5-Ei9" id="AuV-qH-OII"/>
+                        <outlet property="popUpView" destination="nEh-gR-641" id="9fP-Ap-6Af"/>
+                        <outlet property="popUpWind" destination="2xp-Bd-jEP" id="08k-sV-xst"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jst-bh-CPm" userLabel="First Responder" sceneMemberID="firstResponder"/>
