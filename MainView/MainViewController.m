@@ -404,7 +404,9 @@ NSInteger secondsCount = 30;
         [myLocationDic setObject:userPhone forKey:@"phonenumber"];
         [myLocationDic setObject:userlat forKey:@"latitude"];
         [myLocationDic setObject:userlong forKey:@"longitude"];
-        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic options:kNilOptions error:nil];
+        NSData *myData = [NSJSONSerialization dataWithJSONObject:myLocationDic
+                                                         options:kNilOptions
+                                                           error:nil];
         
         
 //        NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
@@ -794,7 +796,9 @@ NSInteger secondsCount = 30;
                 [userReport setValue:phoneNumber forKey:@"phonenumber"];
             
                 
-                NSData *myData1 = [NSJSONSerialization dataWithJSONObject:userReport options:kNilOptions error:nil];
+                NSData *myData1 = [NSJSONSerialization dataWithJSONObject:userReport
+                                                                  options:kNilOptions
+                                                                    error:nil];
             
 //            NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
             Server *connect = [[Server alloc] init];
@@ -879,7 +883,9 @@ NSInteger secondsCount = 30;
                     [userReport setValue:phoneNumber forKey:@"phonenumber"];
                     [userReport setValue:victimPhone forKey:@"targetphone"];
                 
-                    NSData *myData1 = [NSJSONSerialization dataWithJSONObject:userReport options:kNilOptions error:nil];
+                    NSData *myData1 = [NSJSONSerialization dataWithJSONObject:userReport
+                                                                      options:kNilOptions
+                                                                        error:nil];
             
 //                    NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
                     Server *connect = [[Server alloc] init];
@@ -1006,7 +1012,9 @@ NSInteger secondsCount = 30;
                 
                 
                 // NSError* error;
-                NSData *myData1 = [NSJSONSerialization dataWithJSONObject:myVictimlist options:kNilOptions error:nil];
+                NSData *myData1 = [NSJSONSerialization dataWithJSONObject:myVictimlist
+                                                                  options:kNilOptions
+                                                                    error:nil];
                 
                 //  NSLog(@"my data1 %@",myData1);
                 

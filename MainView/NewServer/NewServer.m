@@ -42,7 +42,9 @@
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
   //  NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
    // NSLog(@"This is data %@",responseString);
-    resultData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
+    resultData = [NSJSONSerialization JSONObjectWithData:responseData
+                                                 options:kNilOptions
+                                                   error:&err];
     // NSLog(@"Response Data is %@",responseDictionary);
     //NSLog(@"msg is %@", [responseDictionary objectForKey:@"msg"]);
     
@@ -77,7 +79,9 @@
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     //NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSDictionary *yourDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
+    NSDictionary *yourDictionary = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                   options:kNilOptions
+                                                                     error:&err];
     
     
     conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
