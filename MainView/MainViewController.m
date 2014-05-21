@@ -32,9 +32,6 @@
     NSString *victimlocation;
     NSString *markerlocation;
     
-    UITextField *textField1;
-    UITextField *textField2;
-    
     NSMutableArray *newsearchVictimarr;
     
    
@@ -193,6 +190,10 @@ NSInteger secondsCount = 30;
 
 
 - (void)viewDidLoad {
+    self.directionsPopUp.hidden=YES;
+    self.directionsPopUp.layer.cornerRadius = 5;
+    self.directionsPopUp.layer.masksToBounds = YES;
+    [self setupInputAccessory];
     
     //Customize back button arrow in navigation bar
     UIImage *buttonImage = [UIImage imageNamed:@"back111.png"];
@@ -205,8 +206,6 @@ NSInteger secondsCount = 30;
     
     [super viewDidLoad];
     //custom navigator back button 
-    
-
     
     //sp use for search services
     sp = [[DHSearchService alloc] init];
@@ -250,6 +249,82 @@ NSInteger secondsCount = 30;
 }
 
 #pragma mark - Private method
+- (void)setupInputAccessory {
+    
+    UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    doneToolbar.barStyle = UIBarStyleBlackTranslucent;
+    
+    doneToolbar.items = [NSArray arrayWithObjects:
+                         [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelKeyboard:)],
+                         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                         [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithKeyboard:)],
+                         nil];
+    
+    [doneToolbar sizeToFit];
+    
+    addressField.inputAccessoryView = doneToolbar;
+    addressField.inputAccessoryView.tintColor = [UIColor whiteColor];
+    
+    
+}
+
+
+- (void) cancelKeyboard: (UITextField *) textField {
+    [addressField resignFirstResponder];
+}
+
+- (void) doneWithKeyboard: (UITextField *) textField {
+    [addressField resignFirstResponder];
+    [self searchActions];
+}
+
+
+-(void)getDirections{
+    @try
+    {
+        if (!([self.directionStartField.text isEqualToString:@""])&&!([self.directionsDestField.text isEqualToString:@""]))
+        {
+            [waypointStrings_ addObject:self.directionStartField.text];
+            SEL sel = @selector(addMarkerbyGeocoding);
+            NSLog(@"%@",NSStringFromSelector(sel));
+            [gs geocodeAddress:self.directionStartField.text withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
+            
+            [waypointStrings_ addObject:self.directionsDestField.text];
+            [gs geocodeAddress:self.directionsDestField.text withCallback:@selector(addMarkerbyLongpress) withDelegate:self];
+            
+            if([waypointStrings_ count]>1)
+            {
+                NSString *sensor = @"false";
+                NSArray *parameters = [NSArray arrayWithObjects:sensor, waypointStrings_,
+                                       nil];
+                NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
+                NSDictionary *query = [NSDictionary dictionaryWithObjects:parameters
+                                                                  forKeys:keys];
+                MDDirectionService *mds=[[MDDirectionService alloc] init];
+                SEL selector = @selector(addDirections:);
+                [mds setDirectionsQuery:query
+                           withSelector:selector
+                           withDelegate:self];
+            }
+            
+        }
+    }
+    @catch(NSException *e)
+    {
+        UIAlertView *searchAlert=[[UIAlertView alloc] initWithTitle:@"Can't get direction"
+                                                            message:@"Please input Start and Destination point."
+                                                           delegate:nil                                         cancelButtonTitle:@"OK"
+                                                  otherButtonTitles: nil];
+        [searchAlert show];
+    }
+    @finally{}
+
+    [self.directionStartField resignFirstResponder];
+    [self.directionsDestField resignFirstResponder];
+
+}
+
+
 //Add directions and add polyline
 - (void)addDirections:(NSDictionary *)json {
     NSDictionary *routes = [json objectForKey:@"routes"][0];
@@ -431,6 +506,8 @@ NSInteger secondsCount = 30;
     return newImage;
 }
 
+
+
 -(void)clearmapdata{
     [mapView_ clear];
     [waypoints_ removeAllObjects];
@@ -499,174 +576,15 @@ NSInteger secondsCount = 30;
     marker.map = mapView_;
     
 }
-
-// Change custom infowindow when click on marker
-//-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-//    CustomInforWindow *InfoWindow  =  [[[NSBundle mainBundle] loadNibNamed:@"ViewMapMarker" owner:self options:nil] objectAtIndex:0];
-//
-////  for(int i=0;i<[victimArray count];i++)
-////    {
-////        NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
-////
-////        NSString *namenumber=[dict valueForKey:@"username"];
-////        NSString *phonenumber=[dict valueForKey:@"username"];
-//
-//    InfoWindow.name.text= marker.title;
-//    InfoWindow.phone.text= marker.snippet;
-//
-////    }
-//return InfoWindow;
-//}
-
--(void)callDirectionsPopup{
-    
-    prompt = [[UIAlertView alloc] initWithTitle:@"Get directions"
-                                        message:@"Input Start and Destination point here."
-                                       delegate:self
-                              cancelButtonTitle:@"Cancel"
-                              otherButtonTitles: @"Ok",nil];
-    
-    [prompt show];
-    CGFloat height = 25.0;
-    
-    UILabel *msgLabel = [[prompt subviews] objectAtIndex:0];
-    
-    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(msgLabel.frame.origin.x, msgLabel.frame.origin.y+msgLabel.frame.size.height, msgLabel.frame.size.width, height)];
-    textField1.placeholder=@"Start point";
-    [textField1 setBackgroundColor:[UIColor whiteColor]];
-    textField2 = [[UITextField alloc] initWithFrame:CGRectOffset(textField1.frame, 0, height + 4)];
-    textField2.placeholder=@"Destination point";
-    [textField2 setBackgroundColor:[UIColor whiteColor]];
-    
-    NSArray *followringSubviews = [[prompt subviews] subarrayWithRange:NSMakeRange(3, [[prompt subviews] count] - 3)];
-    [followringSubviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-        view.frame = CGRectOffset(view.frame, 0, 3*height);
-        
-    }];
-    [prompt addSubview:textField1];
-    [prompt addSubview:textField2];
-    
-    textField1.delegate = self;
-    textField2.delegate = self;
-    prompt.frame = CGRectUnion(prompt.frame, CGRectOffset(prompt.frame, 0, 80));
-    [textField1 resignFirstResponder];
-    [textField2 resignFirstResponder];
-}
-
-#pragma mark - KVO updates
-
-//set default camera position is current location when load map
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    if (!firstLocationUpdate_) {
-        // If the first location update has not yet been recieved, then jump to that
-        // location.
-        firstLocationUpdate_ = YES;
-        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:12];
-    }
-   currentLocation = mapView_.myLocation;
-    }
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
-}
-
-
-// Set action when click on map Marker
-- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker*)marker
-    {
-        //event when marker is a place
-        if([marker.title isEqualToString:@"This place is:"]){
-            confirm = [[UIAlertView alloc] initWithTitle:@"What do you want?"
-                                                 message:@""
-                                                delegate:self
-                                       cancelButtonTitle:@"Cancel"
-                                       otherButtonTitles:@"Get direction to here",nil];
-            [confirm show];
-
-        }
-        
-        //event when marker is a victim
-        else{
-    //victimPhone= marker.snippet;
-    victimlocation= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
-       // NSLog(@"victimlocation 1: %@",victimlocation);
-    confirm = [[UIAlertView alloc] initWithTitle:@"Victim was saved?"
-                                                    message:@""
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Victim is safe now",@"Get direction to victim",@"This user is a spammer",nil];
-    [confirm show];
-        }
-}
-
-
-#pragma mark - Actions
-
-// Clear current map view
-- (IBAction)clear:(id)sender {
-    [self clearmapdata];
-    
-}
-// my location button
-- (IBAction)geosv:(id)sender {
-    CLLocation *location = mapView_.myLocation;
-    if (location) {
-        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:14];
-        [mapView_ animateToLocation:location.coordinate];
-    }
-    
-}
-
-//Search for a lot of place when click on button
-- (IBAction)searchplace:(id)sender {
-    [addressField resignFirstResponder];
-    //    SEL sel = @selector(addMarkerbySearch);
-    //    //[self performSelector:@selector(addMarkerbySearch)];
-    //
-    //    NSLog(@"%@",NSStringFromSelector(sel));
-    [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
-    NSLog(@"You are searching for : %@ ",addressField.text);
-    addressField.text=@"";
-    
-}
-
-// Search one adress
-- (IBAction)geocode:(id)sender {
-    [addressField resignFirstResponder];
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-   	NSString *internetStatus=[user objectForKey:@"Internet"];
-    
-    if ([internetStatus isEqualToString:@"NO"]) {
-        NSLog(@"Run with out network and can search geocoder");
-    } else if([internetStatus isEqualToString:@"YES"]) {
-        SEL sel = @selector(addMarkerbyGeocoding);
-        //[self performSelector:@selector(addMarker)];
-        
-        NSLog(@"%@",NSStringFromSelector(sel));
-        [gs geocodeAddress:addressField.text withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
-    }
-    
-}
-
-
-//Dismiss keyboard when click on "Return", search place, geocoding, search victims
-- (IBAction)dismissKeyboard:(id)sender {
-    [self clearmapdata];
+-(void)searchActions{
+     [self clearmapdata];
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString *internetStatus=[user objectForKey:@"Internet"];
     if (addressField.text.length<1) {
         [addressField resignFirstResponder];
     } else {
-       
+        
         if ([internetStatus isEqualToString:@"NO"]) {
             NSLog(@"Run with out network and can't search ");
         } else if([internetStatus isEqualToString:@"YES"]) {
@@ -794,14 +712,149 @@ NSInteger secondsCount = 30;
                     
                 }
             }
+            
+        }
+        
+    }
+}
+// Change custom infowindow when click on marker
+//-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+//    CustomInforWindow *InfoWindow  =  [[[NSBundle mainBundle] loadNibNamed:@"ViewMapMarker" owner:self options:nil] objectAtIndex:0];
+//
+////  for(int i=0;i<[victimArray count];i++)
+////    {
+////        NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
+////
+////        NSString *namenumber=[dict valueForKey:@"username"];
+////        NSString *phonenumber=[dict valueForKey:@"username"];
+//
+//    InfoWindow.name.text= marker.title;
+//    InfoWindow.phone.text= marker.snippet;
+//
+////    }
+//return InfoWindow;
+//}
+
+#pragma mark - KVO updates
+
+//set default camera position is current location when load map
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if (!firstLocationUpdate_) {
+        // If the first location update has not yet been recieved, then jump to that
+        // location.
+        firstLocationUpdate_ = YES;
+        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                         zoom:12];
+    }
+   currentLocation = mapView_.myLocation;
+    }
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+// Set action when click on map Marker
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker*)marker
+    {
+        //event when marker is a place
+        if([marker.title isEqualToString:@"This place is:"]){
+            confirm = [[UIAlertView alloc] initWithTitle:@"What do you want?"
+                                                 message:@""
+                                                delegate:self
+                                       cancelButtonTitle:@"Cancel"
+                                       otherButtonTitles:@"Get direction to here",nil];
+            [confirm show];
 
         }
-                
+        
+        //event when marker is a victim
+        else{
+    //victimPhone= marker.snippet;
+    victimlocation= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
+       // NSLog(@"victimlocation 1: %@",victimlocation);
+    confirm = [[UIAlertView alloc] initWithTitle:@"Victim was saved?"
+                                                    message:@""
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Victim is safe now",@"Get direction to victim",@"This user is a spammer",nil];
+    [confirm show];
+        }
+}
+
+
+#pragma mark - Actions
+
+// Clear current map view
+- (IBAction)clear:(id)sender {
+    [self clearmapdata];
+    
+}
+// my location button
+- (IBAction)geosv:(id)sender {
+    CLLocation *location = mapView_.myLocation;
+    if (location) {
+        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                         zoom:14];
+        [mapView_ animateToLocation:location.coordinate];
     }
-    addressField.text=@"";
+    
+}
+- (IBAction)popUpCancelBt:(id)sender {
+    [self.directionStartField resignFirstResponder];
+    [self.directionsDestField resignFirstResponder];
+    self.directionsPopUp.hidden =YES;
+}
+
+- (IBAction)popUpOkBt:(id)sender {
+    
+    [self getDirections];
+    self.directionsPopUp.hidden =YES;
+}
+
+//Search for a lot of place when click on button
+- (IBAction)searchplace:(id)sender {
     [addressField resignFirstResponder];
-   // [startPoint resignFirstResponder];
-    //[destinationPoint resignFirstResponder];
+    //    SEL sel = @selector(addMarkerbySearch);
+    //    //[self performSelector:@selector(addMarkerbySearch)];
+    //
+    //    NSLog(@"%@",NSStringFromSelector(sel));
+    [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
+    NSLog(@"You are searching for : %@ ",addressField.text);
+    addressField.text=@"";
+    
+}
+
+// Search one adress
+- (IBAction)geocode:(id)sender {
+    [addressField resignFirstResponder];
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+   	NSString *internetStatus=[user objectForKey:@"Internet"];
+    
+    if ([internetStatus isEqualToString:@"NO"]) {
+        NSLog(@"Run with out network and can search geocoder");
+    } else if([internetStatus isEqualToString:@"YES"]) {
+        SEL sel = @selector(addMarkerbyGeocoding);
+        //[self performSelector:@selector(addMarker)];
+        
+        NSLog(@"%@",NSStringFromSelector(sel));
+        [gs geocodeAddress:addressField.text withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
+    }
+    
+}
+
+
+//Dismiss keyboard when click on "Return", search place, geocoding, search victims
+- (IBAction)dismissKeyboard:(id)sender {
+    [self searchActions];
+    [addressField resignFirstResponder];
+
 }
 
 // Declare action when click on alert button
@@ -936,53 +989,8 @@ NSInteger secondsCount = 30;
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
         }
         else
-        {   [textField1 resignFirstResponder];
-            [textField2 resignFirstResponder];
-            @try{
-                
-                NSString *entered1 = textField1.text;
-                NSString *entered2 = textField2.text;
-                //label.text = [NSString stringWithFormat:@"You typed: %@", entered];
-                NSLog(@"%@", entered1);
-                NSLog(@"%@", entered2);
-                
-                
-                [waypointStrings_ addObject:entered1];
-                SEL sel = @selector(addMarkerbyGeocoding);
-                NSLog(@"%@",NSStringFromSelector(sel));
-                [gs geocodeAddress:entered1 withCallback:@selector(addMarkerbyGeocoding) withDelegate:self];
-                
-                [waypointStrings_ addObject:entered2];
-                [gs geocodeAddress:entered2 withCallback:@selector(addMarkerbyLongpress) withDelegate:self];
-                
-                
-                entered1=@"";
-                entered2=@"";
-                
-                if([waypointStrings_ count]>1)
-                {
-                    NSString *sensor = @"false";
-                    NSArray *parameters = [NSArray arrayWithObjects:sensor, waypointStrings_,
-                                           nil];
-                    NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
-                    NSDictionary *query = [NSDictionary dictionaryWithObjects:parameters
-                                                                      forKeys:keys];
-                    MDDirectionService *mds=[[MDDirectionService alloc] init];
-                    SEL selector = @selector(addDirections:);
-                    [mds setDirectionsQuery:query
-                               withSelector:selector
-                               withDelegate:self];
-                }
-            }
-            @catch(NSException *e){
-                UIAlertView *searchAlert=[[UIAlertView alloc] initWithTitle:@"Can't get direction"
-                                                                    message:@"Please input Start and Destination point."
-                                                                   delegate:nil                                         cancelButtonTitle:@"OK"
-                                                          otherButtonTitles: nil];
-                [searchAlert show];
-            }
-            @finally{}
-   
+        {
+            
         }
     }
     }
@@ -1175,8 +1183,7 @@ NSInteger secondsCount = 30;
     [mapView_ clear];
     [waypoints_ removeAllObjects];
     [waypointStrings_ removeAllObjects];
-    [self callDirectionsPopup];
-
+    self.directionsPopUp.hidden=NO;
  }
 
 @end
