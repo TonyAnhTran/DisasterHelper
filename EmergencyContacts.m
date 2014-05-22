@@ -480,25 +480,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (IBAction)saveChange:(id)sender {
+    NSLog(@"%@ %@",nameUser1.text,phoneUser1.text);
+    
     NSUserDefaults *checkLogin = [NSUserDefaults standardUserDefaults];
     NSString *check = [checkLogin valueForKey:@"checkLogin"];
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
    	NSString *internetStatus=[user objectForKey:@"Internet"];
     
-    
-    
-    if (!([nameUser1.text isEqualToString:@"Contact 1"]
-          ||[nameUser2.text isEqualToString:@"Contact 2"]
-          ||[nameUser3.text isEqualToString:@"Contact 3"]) ) {
-        
-        if ([internetStatus isEqualToString:@"NO"]) {
-            NSLog(@"Run with out network and don't do any thing");
-        } else if([internetStatus isEqualToString:@"YES"]) {
-            if ([check isEqualToString:@"Offline"]) {
-            }
-            
-            else if ([check isEqualToString:@"LOGIN"]) {
+    if ([internetStatus isEqualToString:@"NO"]) {
+        NSLog(@"Run with out network and don't do any thing");
+    } else if([internetStatus isEqualToString:@"YES"]) {
+        if ([check isEqualToString:@"Offline"]) {
+        }
+        else if ([check isEqualToString:@"LOGIN"]) {
+            if (!([nameUser1.text isEqualToString:@"Contact 1"]
+                  ||[nameUser2.text isEqualToString:@"Contact 2"]
+                  ||[nameUser3.text isEqualToString:@"Contact 3"]) )
+            {
                 //Enter password to confirm
                 password = [[UIAlertView alloc]initWithTitle:@"Security"
                                                      message:@"Please enter your password below:"
@@ -509,7 +508,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 [password textFieldAtIndex:0].delegate = self;
                 [password textFieldAtIndex:0].secureTextEntry = YES;
                 [password show];
-            }else{
+                
+            } else
+            {
                 //aler enter all
                 enterAll = [[UIAlertView alloc]initWithTitle:@"Missing Field"
                                                      message:@"Please choose three emergency contacts before saving to server for your safe."
@@ -517,12 +518,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:   nil];
                 [enterAll show];
-                //Save change to serveR
             }
-
         }
     }
-           
     
 }
 
@@ -602,7 +600,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }else{
             picker1 = [[ABPeoplePickerNavigationController alloc] init];
             picker1.peoplePickerDelegate = self;
-            [self presentViewController:picker animated:YES completion:nil];
+            [self presentViewController:picker1 animated:YES completion:nil];
         }
     }
     if (alertView == password) {
