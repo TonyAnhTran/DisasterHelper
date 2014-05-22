@@ -316,7 +316,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (IBAction)ClickReplyField:(id)sender {
-    [scrollNotice setContentOffset:CGPointMake(0,replyTextField.center.y-200) animated:YES];
+    [scrollNotice setContentOffset:CGPointMake(0,replyTextField.center.y-250) animated:YES];
 }
 
 - (IBAction)ClickrReturnReplyField:(id)sender {
@@ -329,7 +329,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         // Found next responder, so set it.
         [nextResponder becomeFirstResponder];
     } else {
-        [scrollNotice setContentOffset:CGPointMake(0,0) animated:YES];
+        [scrollNotice setContentOffset:CGPointMake(0,-60) animated:YES];
         [replyTextField resignFirstResponder];
     }
 }
