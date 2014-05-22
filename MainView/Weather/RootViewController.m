@@ -239,17 +239,17 @@
             // NSLog(@"test2 %@",temp);
             NSString *currenttemp= [temp objectForKey:@"temp"];
             CGFloat flcurrenttemp = (CGFloat)[currenttemp floatValue];
-            int curenttempint = (int)ceilf(flcurrenttemp);
+            int curenttempint = (int)roundf(flcurrenttemp);
             
             NSString *mintemp= [temp objectForKey:@"temp_min"];
             CGFloat flmintemp = (CGFloat)[mintemp floatValue];
-            int mintempint = (int)ceilf(flmintemp);
+            int mintempint = (int)roundf(flmintemp);
             
             NSString *maxtemp= [temp objectForKey:@"temp_max"];
             CGFloat flmaxtemp = (CGFloat)[maxtemp floatValue];
-            int maxtempint = (int)roundf(flmaxtemp);
+            int maxtempint = (int)ceilf(flmaxtemp);
             
-            NSString *pressure= [temp objectForKey:@"temp_max"];
+            NSString *pressure= [temp objectForKey:@"pressure"];
             NSString *humidity= [temp objectForKey:@"humidity"];
             
             self.popUpTitle.text=@"Map center's weather";
