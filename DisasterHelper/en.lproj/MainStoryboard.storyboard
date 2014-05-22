@@ -958,7 +958,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view alpha="0.94999999999999996" contentMode="scaleToFill" id="yVw-F5-KYj" userLabel="markerInforView">
-                                <rect key="frame" x="20" y="115" width="280" height="220"/>
+                                <rect key="frame" x="20" y="115" width="280" height="225"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Alr-5x-8ks" userLabel="inforTitle">
@@ -1024,7 +1024,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CGY-8h-qE2" userLabel="cancelBt">
-                                        <rect key="frame" x="0.0" y="190" width="280" height="30"/>
+                                        <rect key="frame" x="0.0" y="190" width="280" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1189,7 +1189,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xjT-Td-h5F" userLabel="moreDetailBt">
-                                <rect key="frame" x="43" y="445" width="238" height="33"/>
+                                <rect key="frame" x="43" y="444" width="238" height="33"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="More weather details"/>
                                 <connections>
