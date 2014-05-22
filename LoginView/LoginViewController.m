@@ -79,7 +79,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     {
         // Update the UI on the main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Yayyy, we have the interwebs!");
+            NSLog(@"we have the internet");
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
             [user setValue:@"YES" forKey:@"Internet"];
         });

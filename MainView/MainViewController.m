@@ -332,7 +332,7 @@ NSInteger secondsCount = 30;
     NSString *overview_route = [route objectForKey:@"points"];
     GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-    polyline.strokeWidth = 10.0f;
+    polyline.strokeWidth = 2.0f;
     polyline.map = mapView_;
     // NSLog(@"%@",overview_route);
     
