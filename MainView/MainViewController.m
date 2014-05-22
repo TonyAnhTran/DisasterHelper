@@ -584,6 +584,10 @@ NSInteger secondsCount = 30;
 -(void)searchActions{
      [self clearmapdata];
     
+    NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
+    //NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
+    NSString *serverIP=[ServerUrl objectForKey:@"serverIP"];
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString *internetStatus=[user objectForKey:@"Internet"];
     if (addressField.text.length<1) {
@@ -633,7 +637,8 @@ NSInteger secondsCount = 30;
                     
                     if ([avatar isEqualToString:@"default_avatar.png"]) {
                         
-                        NSString *serverurl=@"http://192.168.10.115:3000/images/";
+                        NSString *serverurl=[NSString stringWithFormat:@"%@/images/",serverIP];
+                     
                         NSString *fullurl=[NSString stringWithFormat:@"%@%@",serverurl,avatar];
                         NSURL *imageURL = [NSURL URLWithString:fullurl];
                         
@@ -674,7 +679,7 @@ NSInteger secondsCount = 30;
                         
                     }
                     else {
-                        NSString *serverurl=@"http://192.168.10.115:3000";
+                        NSString *serverurl=serverIP;
                         NSString *fullurl=[NSString stringWithFormat:@"%@%@",serverurl,avatar];
                         NSURL *imageURL = [NSURL URLWithString:fullurl];
                         
