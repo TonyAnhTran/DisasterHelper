@@ -957,55 +957,102 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="yVw-F5-KYj" userLabel="resultPopUpView">
-                                <rect key="frame" x="36" y="201" width="250" height="170"/>
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" id="yVw-F5-KYj" userLabel="markerInforView">
+                                <rect key="frame" x="20" y="115" width="280" height="220"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Directions result" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Alr-5x-8ks" userLabel="resultTitleLb">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="31"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Alr-5x-8ks" userLabel="inforTitle">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.086274509799999996" green="0.66666666669999997" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Point:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bqc-qm-zPb">
-                                        <rect key="frame" x="0.0" y="35" width="67" height="20"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9Sn-a8-vx3" userLabel="victimAvatar">
+                                        <rect key="frame" x="3" y="35" width="82" height="79"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BO6-Sp-c9r" userLabel="placeLb">
+                                        <rect key="frame" x="96" y="36" width="175" height="65"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qzC-VI-jPp" userLabel="getdirectionVictimBt">
+                                        <rect key="frame" x="0.0" y="122" width="140" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Destination Point:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4bf-Gn-Kqf">
-                                        <rect key="frame" x="0.0" y="56" width="136" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total distance:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NbI-Ki-xxs">
-                                        <rect key="frame" x="0.0" y="77" width="81" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total time:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FjR-OJ-xmy">
-                                        <rect key="frame" x="0.0" y="98" width="58" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Directions type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qdW-N0-oaV">
-                                        <rect key="frame" x="0.0" y="119" width="88" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qzC-VI-jPp" userLabel="seeMapBt">
-                                        <rect key="frame" x="0.0" y="140" width="250" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="View on map">
+                                        <state key="normal" title="Get directions to victim">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="markerTagActions:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="mKn-sJ-j9X"/>
+                                        </connections>
                                     </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BnS-D7-JAF" userLabel="comingBt">
+                                        <rect key="frame" x="140" y="122" width="140" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="I'm coming">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="markerTagActions:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="KGH-hq-gHP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TFV-GJ-T7L" userLabel="victimsafeBt">
+                                        <rect key="frame" x="0.0" y="156" width="140" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Victim is safe now">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="markerTagActions:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="LGL-zc-iau"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lu5-hl-Hzu" userLabel="reportSpamBt">
+                                        <rect key="frame" x="140" y="156" width="140" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Report as spam">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="markerTagActions:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="ksG-s3-Ruo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CGY-8h-qE2" userLabel="cancelBt">
+                                        <rect key="frame" x="0.0" y="190" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="markerTagActions:" destination="Xtp-pb-qx7" eventType="touchUpInside" id="MfF-EX-vOa"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7g2-I8-N61" userLabel="line1">
+                                        <rect key="frame" x="0.0" y="122" width="280" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bwm-qI-JvE" userLabel="line2">
+                                        <rect key="frame" x="0.0" y="156" width="280" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yQT-be-nPS" userLabel="line3">
+                                        <rect key="frame" x="0.0" y="190" width="280" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Nms-Dw-oha" userLabel="line4">
+                                        <rect key="frame" x="140" y="123" width="1" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1084,8 +1131,13 @@
                         <outlet property="directionStartField" destination="BSW-f4-vzm" id="dfO-Sc-RaB"/>
                         <outlet property="directionsDestField" destination="7WI-F2-eIN" id="Jch-eJ-Mbg"/>
                         <outlet property="directionsPopUp" destination="cXK-RE-XKf" id="DXH-qv-8Zq"/>
+                        <outlet property="inforVictimAvatar" destination="9Sn-a8-vx3" id="5mp-a7-6WV"/>
+                        <outlet property="inforVictimname" destination="Alr-5x-8ks" id="LLf-mZ-ZjE"/>
+                        <outlet property="makerInfoView" destination="yVw-F5-KYj" id="Uia-EH-EAm"/>
                         <outlet property="mapView_" destination="swb-hR-NLx" id="21k-iE-Ncq"/>
+                        <outlet property="markerinforBt" destination="CGY-8h-qE2" id="QO9-su-Jto"/>
                         <outlet property="sender" destination="jkN-Gz-v9c" id="bNy-7S-Yl3"/>
+                        <outlet property="victimAdress" destination="BO6-Sp-c9r" id="kfL-R9-MoJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mR6-oS-W6z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1116,7 +1168,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jCW-TB-3i0" userLabel="myLocationBt">
-                                <rect key="frame" x="280" y="447" width="40" height="38"/>
+                                <rect key="frame" x="280" y="446" width="40" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.91836734693877553" green="0.91836734693877553" blue="0.91836734693877553" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1137,7 +1189,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xjT-Td-h5F" userLabel="moreDetailBt">
-                                <rect key="frame" x="43" y="446" width="238" height="33"/>
+                                <rect key="frame" x="43" y="445" width="238" height="33"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="More weather details"/>
                                 <connections>

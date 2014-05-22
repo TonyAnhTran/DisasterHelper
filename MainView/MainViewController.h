@@ -55,5 +55,18 @@
 - (IBAction)popUpCancelBt:(id)sender;
 - (IBAction)popUpOkBt:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIView *makerInfoView;
+@property (strong, nonatomic) IBOutlet UILabel *inforVictimname;
+@property (strong, nonatomic) IBOutlet UIImageView *inforVictimAvatar;
+@property (strong, nonatomic) IBOutlet UILabel *victimAdress;
+@property (strong, nonatomic) IBOutlet UIButton *markerinforBt;
+- (IBAction)markerTagActions:(UIButton *)sender;
+
+
+
+
+
+
+
 -(void)clearmapdata;
 @end
