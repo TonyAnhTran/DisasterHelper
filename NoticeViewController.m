@@ -104,14 +104,29 @@ NSString *bx;
                 for (int i=0; i<length; i++) {
                     AppDelegate *noticeUser = [[AppDelegate alloc]init];
                     
-                    NSString *phone = [[returnFromNewser objectAtIndex:i]valueForKey:@"victimphone"];
-                    NSString *contents= [[returnFromNewser objectAtIndex:i]valueForKey:@"content"];
-                    NSString *date= [[returnFromNewser objectAtIndex:i]valueForKey:@"created_at"];
-                    NSString *name= [[returnFromNewser objectAtIndex:i]valueForKey:@"victimname"];
-                    NSString *lat = [[returnFromNewser objectAtIndex:i]valueForKey:@"victimlatitude"];
-                    NSString *lon = [[returnFromNewser objectAtIndex:i]valueForKey:@"victimlongitude"];
-                    NSString *noId = [[returnFromNewser objectAtIndex:i] valueForKey:@"id"];
-                    NSString *replied = [[returnFromNewser objectAtIndex:i] valueForKey:@"replied"];
+                    NSArray *victimPhone=[returnFromNewser valueForKey:@"victimphone"];
+                    NSString *phone = [victimPhone objectAtIndex:i];
+                    
+                    NSArray *arrContent=[returnFromNewser valueForKey:@"content"];
+                    NSString *contents= [arrContent objectAtIndex:i];
+                    
+                    NSArray *arrDate=[returnFromNewser valueForKey:@"created_at"];
+                    NSString *date= [arrDate objectAtIndex:i];
+                    
+                    NSArray *arrName=[returnFromNewser valueForKey:@"victimname"];
+                    NSString *name= [arrName objectAtIndex:i];
+                    
+                    NSArray *arrLat=[returnFromNewser valueForKey:@"victimlatitude"];
+                    NSString *lat = [arrLat objectAtIndex:i];
+                    
+                    NSArray *arrLng=[returnFromNewser valueForKey:@"victimlongitude"];
+                    NSString *lon = [arrLng objectAtIndex:i];
+                    
+                    NSArray *arrID=[returnFromNewser valueForKey:@"id"];
+                    NSString *noId = [arrID objectAtIndex:i];
+                    
+                    NSArray *arrReply=[returnFromNewser valueForKey:@"replied"];
+                    NSString *replied = [arrReply objectAtIndex:i];
                     
                     [noticeUser setNoticeUsername:name];
                     [noticeUser setNoticeNumber:phone];
