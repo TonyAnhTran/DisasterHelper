@@ -7,6 +7,7 @@
 //
 
 #import "ViewContentsNotice.h"
+#import "MainViewController.h"
 
 @interface ViewContentsNotice (){
     double friendlat;
@@ -139,6 +140,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 returnFromNewser = [[connect postRequest:url withData:myData]mutableCopy];
                 
             }else{
+                positionLabel.userInteractionEnabled = YES;
+                UITapGestureRecognizer *tapGesture =
+                [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(movetoMap)];
+                [positionLabel addGestureRecognizer:tapGesture];
                 //Display user here
                 phoneContactRequest.text=currentNotice.noticeNumber;
                 phoneContactRequest.font=[phoneContactRequest.font fontWithSize:14];
@@ -162,7 +167,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
             
 }
-
+-(void)movetoMap{
+    MainViewController *mapView = [self.storyboard instantiateViewControllerWithIdentifier:@"mapView"];
+    [self.navigationController pushViewController:mapView animated:YES];
+    double lat=[currentNotice.noticeLat doubleValue];
+    double lng=[currentNotice.noticeLong doubleValue];
+    
+   [mapView moveToLocation:currentNotice.noticeUsername lat:lat lng:lng];
+    
+  // [currentNotice noticeLat],[currentNotice noticeLong]
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //#warning Potentially incomplete method implementation.

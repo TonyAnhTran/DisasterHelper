@@ -96,10 +96,10 @@ NSString *bx;
             
             NSLog(@"%@",returnFromNewser);
             int length =[returnFromNewser count];
-            if (length==0) {
-                //do nothing
-                NSLog(@"Return nothing");
-            }else{
+//            if ([returnFromNewser[0] isEqualToString:@"There is no request sent"]) {
+//                //do nothing
+//                NSLog(@"Return nothing");
+            
                 //Get infomation and add to notice array
                 for (int i=0; i<length; i++) {
                     AppDelegate *noticeUser = [[AppDelegate alloc]init];
@@ -137,7 +137,7 @@ NSString *bx;
                     [noticeUser setNoticeId:noId];
                     [noticeUser setNoticeReplied:replied];
                     [noticesList insertObject:noticeUser atIndex:1];
-                }
+                
             }
         }
         @catch (NSException *exception) {

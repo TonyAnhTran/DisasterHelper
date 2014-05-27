@@ -85,6 +85,7 @@
 		36DF461618D042F900560B59 /* DHSearchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DF461518D042F900560B59 /* DHSearchService.m */; };
 		36EA87CE18D2D61A00D7A1AA /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 36EA87CD18D2D61900D7A1AA /* arrow.png */; };
 		36ED8556192C72F5003FA6A7 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36ED8555192C72F5003FA6A7 /* GoogleMaps.framework */; };
+		36F4A5FE192EE5350034F3A5 /* DirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F4A5FD192EE5350034F3A5 /* DirectionsTableViewController.m */; };
 		501041F818EA73D00033FFE1 /* guide.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041F718EA73D00033FFE1 /* guide.html */; };
 		501041FA18EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041F918EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html */; };
 		501041FC18EA760E0033FFE1 /* sdffas.html in Resources */ = {isa = PBXBuildFile; fileRef = 501041FB18EA760E0033FFE1 /* sdffas.html */; };
@@ -270,7 +271,6 @@
 		CF54A0A918CD60CA008C7C13 /* wordpress.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03A18CD60CA008C7C13 /* wordpress.png */; };
 		CF54A0AA18CD60CA008C7C13 /* youtube.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03B18CD60CA008C7C13 /* youtube.png */; };
 		CF54A0AB18CD60CA008C7C13 /* car icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03C18CD60CA008C7C13 /* car icon.png */; };
-		CF54A0AC18CD60CA008C7C13 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03D18CD60CA008C7C13 /* delete.png */; };
 		CF54A0AD18CD60CA008C7C13 /* direction bar.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03E18CD60CA008C7C13 /* direction bar.png */; };
 		CF54A0AE18CD60CA008C7C13 /* Direction icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CF54A03F18CD60CA008C7C13 /* Direction icon.png */; };
 		CF54A0AF18CD60CA008C7C13 /* google-web-search-48 2.ico in Resources */ = {isa = PBXBuildFile; fileRef = CF54A04018CD60CA008C7C13 /* google-web-search-48 2.ico */; };
@@ -400,6 +400,8 @@
 		36DF461518D042F900560B59 /* DHSearchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DHSearchService.m; path = MainView/Services/DHSearchService.m; sourceTree = "<group>"; };
 		36EA87CD18D2D61900D7A1AA /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrow.png; path = "MainView/Map support/arrow.png"; sourceTree = "<group>"; };
 		36ED8555192C72F5003FA6A7 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		36F4A5FC192EE5350034F3A5 /* DirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectionsTableViewController.h; path = MainView/Services/DirectionsTableViewController.h; sourceTree = "<group>"; };
+		36F4A5FD192EE5350034F3A5 /* DirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectionsTableViewController.m; path = MainView/Services/DirectionsTableViewController.m; sourceTree = "<group>"; };
 		501041F718EA73D00033FFE1 /* guide.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = guide.html; path = "Tips Html/guide.html"; sourceTree = "<group>"; };
 		501041F918EA74DE0033FFE1 /* DISASTER HELPER INSTRUCTIONAL GUIDE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "DISASTER HELPER INSTRUCTIONAL GUIDE.html"; sourceTree = "<group>"; };
 		501041FB18EA760E0033FFE1 /* sdffas.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sdffas.html; sourceTree = "<group>"; };
@@ -596,7 +598,6 @@
 		CF54A03A18CD60CA008C7C13 /* wordpress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wordpress.png; sourceTree = "<group>"; };
 		CF54A03B18CD60CA008C7C13 /* youtube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youtube.png; sourceTree = "<group>"; };
 		CF54A03C18CD60CA008C7C13 /* car icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "car icon.png"; path = "MainView/Map support/car icon.png"; sourceTree = "<group>"; };
-		CF54A03D18CD60CA008C7C13 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = "MainView/Map support/delete.png"; sourceTree = "<group>"; };
 		CF54A03E18CD60CA008C7C13 /* direction bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "direction bar.png"; path = "MainView/Map support/direction bar.png"; sourceTree = "<group>"; };
 		CF54A03F18CD60CA008C7C13 /* Direction icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Direction icon.png"; path = "MainView/Map support/Direction icon.png"; sourceTree = "<group>"; };
 		CF54A04018CD60CA008C7C13 /* google-web-search-48 2.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = "google-web-search-48 2.ico"; path = "MainView/Map support/google-web-search-48 2.ico"; sourceTree = "<group>"; };
@@ -950,6 +951,8 @@
 				36DF460C18D00AF400560B59 /* NewServer.m */,
 				364A8BEC18C7202B004C659F /* MDDirectionService.h */,
 				364A8BED18C7202B004C659F /* MDDirectionService.m */,
+				36F4A5FC192EE5350034F3A5 /* DirectionsTableViewController.h */,
+				36F4A5FD192EE5350034F3A5 /* DirectionsTableViewController.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -963,7 +966,6 @@
 				367AE0CD18D16DF400CE61A3 /* button_my_location@2x.png */,
 				CF549FE118CD60CA008C7C13 /* back.png */,
 				CF54A03C18CD60CA008C7C13 /* car icon.png */,
-				CF54A03D18CD60CA008C7C13 /* delete.png */,
 				CF54A03E18CD60CA008C7C13 /* direction bar.png */,
 				CF54A03F18CD60CA008C7C13 /* Direction icon.png */,
 				CF54A04018CD60CA008C7C13 /* google-web-search-48 2.ico */,
@@ -1440,7 +1442,6 @@
 				CF54A0A918CD60CA008C7C13 /* wordpress.png in Resources */,
 				CF54A0AA18CD60CA008C7C13 /* youtube.png in Resources */,
 				CF54A0AB18CD60CA008C7C13 /* car icon.png in Resources */,
-				CF54A0AC18CD60CA008C7C13 /* delete.png in Resources */,
 				CF54A0AD18CD60CA008C7C13 /* direction bar.png in Resources */,
 				CF54A0AE18CD60CA008C7C13 /* Direction icon.png in Resources */,
 				CF54A0AF18CD60CA008C7C13 /* google-web-search-48 2.ico in Resources */,
@@ -1578,6 +1579,7 @@
 				149A4ADC18ADCA89004F5DEF /* MainViewController.m in Sources */,
 				149A4AE018ADCAB9004F5DEF /* AdviceTableViewController.m in Sources */,
 				50B3129818B1B5B400F93606 /* ViewContentsTip.m in Sources */,
+				36F4A5FE192EE5350034F3A5 /* DirectionsTableViewController.m in Sources */,
 				501FFE7C18B31520002C4D63 /* AddEmergencyContact.m in Sources */,
 				364A8BE318C71FF9004C659F /* CustomInforWindow.m in Sources */,
 				364A8BEF18C7202B004C659F /* MDDirectionService.m in Sources */,

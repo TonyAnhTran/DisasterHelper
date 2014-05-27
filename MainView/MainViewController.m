@@ -11,6 +11,7 @@
 //#import "AlertPrompt.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "LoginViewController.h"
+#import "DirectionsTableViewController.h"
 
 @interface MainViewController (){
     //waypoint and waypointStrings_ using for get directions
@@ -22,11 +23,13 @@
     
     // victimArray use for display Victims marker
     NSMutableArray *victimArray;
+    NSArray *steps;
     
     // user for send request help
     UIAlertView *alert;
     UIAlertView *prompt;
     UIAlertView *confirm;
+    UIAlertView *directionsResult;
     
     NSString *victimPhone;
     NSString *victimlocation;
@@ -347,7 +350,8 @@ NSInteger secondsCount = 30;
     NSDictionary *total=[display objectAtIndex:0];
     NSDictionary *distance=[total objectForKey:@"distance"];
     NSDictionary *duration=[total objectForKey:@"duration"];
-    NSArray *steps=[total objectForKey:@"steps"];
+    
+    steps=[total objectForKey:@"steps"];
     
     
     NSString *stringdistance =[distance objectForKey:@"text"];
@@ -364,32 +368,21 @@ NSInteger secondsCount = 30;
     //NSLog(@"%@",Resultis);
     
     //display alert view with directions data
-    UIAlertView *directions =[[UIAlertView alloc]initWithTitle:@"Directions result" message:Resultis delegate:nil cancelButtonTitle:@"See on map" otherButtonTitles:nil];
-    [directions show];
+    directionsResult =[[UIAlertView alloc]initWithTitle:@"Directions result" message:Resultis delegate:self cancelButtonTitle:@"See on map" otherButtonTitles:@"More detail", nil];
+    [directionsResult show];
     
+
     
-    // Left alignment text in alert view
-    NSArray *subviewArray = directions.subviews;
-    for(int x = 0; x < [subviewArray count]; x++){
-        
-        if([[[subviewArray objectAtIndex:x] class] isSubclassOfClass:[UILabel class]]) {
-            //UILabel *label = [subviewArray objectAtIndex:x];
-            //label.textAlignment = UITextAlignmentLeft;
-        }
-    }
-    
-    for (int i=0;i<[steps count];i++) {
-        
-        //Get step by step to directions
-        // NSLog(@"step test: %@",steps);
-        //NSDictionary *stepbystep=[steps objectAtIndex:i];
-        // NSLog(@"step test: %@",stepbystep);
-        //NSString *instructionsHtml=[stepbystep objectForKey:@"html_instructions"];
-        // NSLog(@"Step %i: %@",i,instructionsHtml);
-    }
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    DirectionsTableViewController *directionsTable = [segue destinationViewController];
+    directionsTable.arrData = steps;
+
+    
+}
 
 // Funtion to send location to server, but it not nescessary right now, because one funtion the same in MainFlatviewController.m did it
 -(void)sendlocationtoServer{
@@ -606,14 +599,12 @@ NSInteger secondsCount = 30;
             
             //call search place funtion
             [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
-            //NSLog(@"You are searching for : %@ ",addressField.text);
+     
             
             //Check victim array data to find victim from input
             for (int i=0; i<[victimArray count]; i++)
             {
                 
-                // NSLog(@"input: %@", addressField.text);
-                //  NSLog(@"victim array: %@" ,victimArray);
                 NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
                 NSString *name=[dict valueForKey:@"username"];
                 
@@ -727,6 +718,181 @@ NSInteger secondsCount = 30;
         
     }
 }
+-(void)moveToLocation:(NSString *)userName lat:(double)lat lng:(double)lng{
+  
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:lat
+//                                                            longitude:lng
+//                                                                 zoom:13];
+//    [mapView_ setCamera:camera];
+        latAtt =lat;
+        longAtt = lng;
+        victimNameSearch=userName;
+    
+
+}
+-(void)getVictimByNotification{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+   	NSString *internetStatus=[user objectForKey:@"Internet"];
+    
+    NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
+    NSString *userPhone =[phonenumber valueForKey:@"phone"];
+    
+    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+    NSString *ssid=[session objectForKey:@"ssid"];
+    
+    NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
+    NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
+    NSString *serverIP=[ServerUrl objectForKey:@"serverIP"];
+    NSURL *url= [[NSURL alloc] initWithString:stringurl];
+    
+  
+    NSString *victimradius=@"12000";
+    NSString *victimTimeSet=@"7";
+    
+    NSUserDefaults *checkLogin = [NSUserDefaults standardUserDefaults];
+    NSString *check = [checkLogin valueForKey:@"checkLogin"];
+    if ([internetStatus isEqualToString:@"NO"]) {
+        NSLog(@"Run with out network and can't get victim");
+    } else if([internetStatus isEqualToString:@"YES"])
+    {
+        if ([check isEqualToString:@"LOGIN"]) {
+            @try {
+                NSMutableDictionary *myVictimlist = [[NSMutableDictionary alloc] init];
+                [myVictimlist setValue:@"checkVictim" forKey:@"key"];
+                [myVictimlist setValue:victimradius forKey:@"radius"];
+                [myVictimlist setObject:ssid forKey:@"sid"];
+                [myVictimlist setObject:victimTimeSet forKey:@"filter"];
+                [myVictimlist setValue:userPhone forKey:@"phonenumber"];
+                
+                
+                NSData *myData1 = [NSJSONSerialization dataWithJSONObject:myVictimlist
+                                                                  options:kNilOptions
+                                                                    error:nil];
+                
+      
+                NewServer *connect = [[NewServer alloc] init];
+                NSArray *data = [[connect postRequest:url withData:myData1] mutableCopy];
+
+                NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
+                [victimData setValue:data forKey:@"victimdata"];
+                victimArray =[[victimData valueForKey:@"victimdata"]mutableCopy];
+                
+                
+                for(int i=0;i<[victimArray count];i++)
+                {
+                    NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
+
+                    double lat=[[dict valueForKey:@"latitude"] doubleValue];
+                    double lon=[[dict valueForKey:@"longitude"] doubleValue];
+                    NSString *name=[dict valueForKey:@"username"];
+                    NSString *namelower = [name lowercaseString];
+                    //lower input text
+                    NSString *victimNamelower=[victimNameSearch lowercaseString];
+                    
+                    NSString *avatar=[dict objectForKey:@"avatar_url"];
+                    if ([victimNamelower isEqualToString:namelower])
+                    {
+                        if ([avatar isEqualToString:@"default_avatar.png"])
+                        {
+                            
+                            NSString *serverurl=@"/images/";
+                            NSString *fullurl=[NSString stringWithFormat:@"%@%@%@",serverIP,serverurl,avatar];
+                            NSURL *imageURL = [NSURL URLWithString:fullurl];
+                            
+                            
+                            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+                            UIImage *firstavatar=[UIImage imageWithData:imageData];
+                            UIImage *newImage = [self imageWithImage:firstavatar scaledToSize:CGSizeMake(40, 40)];
+                            NSData *newimageData = UIImagePNGRepresentation(newImage);
+                            
+                            NSString *location= [NSString stringWithFormat:@"%f,%f",lat,lon];
+                            
+                            NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
+                            NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl,location];
+                            url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+                            
+                            NSURL *queryUrl = [NSURL URLWithString:url];
+                            NSData *data = [NSData dataWithContentsOfURL: queryUrl];
+                            
+                            NSError* error;
+                            NSDictionary *json = [NSJSONSerialization
+                                                  JSONObjectWithData:data
+                                                  options:kNilOptions
+                                                  error:&error];
+                            
+                            //   NSLog(@"json is: %@", json);
+                            
+                            NSArray* results = [json objectForKey:@"results"];
+                            NSDictionary *result = [results objectAtIndex:0];
+                            NSString *address = [result objectForKey:@"formatted_address"];
+                            
+                            GMSMarker *marker= [[GMSMarker alloc] init];
+                            marker.position= CLLocationCoordinate2DMake(lat,lon);
+                            marker.icon =[UIImage imageWithData:newimageData];
+                            marker.title = name;
+                            marker.snippet = address;
+                            marker.map = mapView_;
+                            mapView_.camera = [GMSCameraPosition cameraWithLatitude:lat longitude:lon zoom:13];
+                        }
+                        else {
+                            NSString *serverurl=serverIP;
+                            NSString *fullurl=[NSString stringWithFormat:@"%@%@",serverurl,avatar];
+                            NSURL *imageURL = [NSURL URLWithString:fullurl];
+                            
+                            // NSLog(@"url: %@",imageURL);
+                            
+                            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+                            UIImage *firstavatar=[UIImage imageWithData:imageData];
+                            UIImage *newImage = [self imageWithImage:firstavatar scaledToSize:CGSizeMake(40, 40)];
+                            NSData *newimageData = UIImagePNGRepresentation(newImage);
+                            
+                            NSString *location= [NSString stringWithFormat:@"%f,%f",lat,lon];
+                            
+                            NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
+                            NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl,location];
+                            url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+                            
+                            NSURL *queryUrl = [NSURL URLWithString:url];
+                            NSData *data = [NSData dataWithContentsOfURL: queryUrl];
+                            
+                            NSError* error;
+                            NSDictionary *json = [NSJSONSerialization
+                                                  JSONObjectWithData:data
+                                                  options:kNilOptions
+                                                  error:&error];
+                            
+                            //   NSLog(@"json is: %@", json);
+                            
+                            NSArray* results = [json objectForKey:@"results"];
+                            NSDictionary *result = [results objectAtIndex:0];
+                            NSString *address = [result objectForKey:@"formatted_address"];
+                            
+                            GMSMarker *marker= [[GMSMarker alloc] init];
+                            marker.position= CLLocationCoordinate2DMake(lat,lon);
+                            marker.icon =[UIImage imageWithData:newimageData];
+                            marker.title = name;
+                            marker.snippet = address;
+                            marker.map = mapView_;
+                            mapView_.camera = [GMSCameraPosition cameraWithLatitude:lat longitude:lon zoom:13];
+
+                        }
+                    }
+                    
+                    // NSLog(@"victim added");
+                };
+                
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Get victim button error-(void)getvicitm");
+            }
+            @finally {
+                
+            }
+            
+        }
+        
+    }
+}
 // Change custom infowindow when click on marker
 //-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
 //    CustomInforWindow *InfoWindow  =  [[[NSBundle mainBundle] loadNibNamed:@"ViewMapMarker" owner:self options:nil] objectAtIndex:0];
@@ -757,11 +923,21 @@ NSInteger secondsCount = 30;
         // location.
         firstLocationUpdate_ = YES;
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:12];
+        if (latAtt==0&&longAtt==0) {
+            mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                             zoom:12];
+        }
+        else{
+            mapView_.camera = [GMSCameraPosition cameraWithLatitude:latAtt longitude:longAtt zoom:13];
+            [victimArray removeAllObjects];
+            [self getVictimByNotification];
+            latAtt=0;
+            longAtt=0;
+        }
+      
     }
    currentLocation = mapView_.myLocation;
-    }
+}
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -900,8 +1076,28 @@ NSInteger secondsCount = 30;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ((alertView==confirm)||(alertView==directionsResult))
+    {
+        if (alertView == directionsResult)
+        {
+            if([title isEqualToString:@"More detail"])
+            {
+                DirectionsTableViewController *resultControler=[[DirectionsTableViewController alloc]init];
+                //[resultControler getDirectionsData:steps];
+                resultControler.arrData=steps;
+                [self.navigationController pushViewController:resultControler animated:YES];
+      
+                //Get step by step to directions
+                // NSLog(@"step test: %@",steps);
+                //NSDictionary *stepbystep=[steps objectAtIndex:i];
+                // NSLog(@"step test: %@",stepbystep);
+                //NSString *instructionsHtml=[stepbystep objectForKey:@"html_instructions"];
+                // NSLog(@"Step %i: %@",i,instructionsHtml);
+                
+            }
+        }
 
-    // "confirm" is map marker object, "promt" is directions alert
+    // "confirm" is map marker object,
         if (alertView == confirm)
         {
             if([title isEqualToString:@"Get direction to here"])
@@ -934,12 +1130,12 @@ NSInteger secondsCount = 30;
                            withSelector:selector
                            withDelegate:self];
                         }
-            
-      
-       
             }
  
         }
+        
+    }
+   
 }
 
 
@@ -1118,9 +1314,8 @@ NSInteger secondsCount = 30;
             }
             
         }
-  
+        
     }
-    
 }
 
 //Get directions button

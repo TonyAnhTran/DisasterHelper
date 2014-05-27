@@ -26,8 +26,9 @@
 
 @interface MainViewController : UIViewController<UITextFieldDelegate,GMSMapViewDelegate,CLLocationManagerDelegate>{
     NSTimer *countdownTimer;
-    NSString *longAtt;
-    NSString *latAtt;
+    double longAtt;
+    double latAtt;
+    NSString *victimNameSearch;
 
     
     __weak IBOutlet GMSMapView *mapView_;
@@ -64,9 +65,6 @@
 
 
 
-
-
-
-
+-(void)moveToLocation:(NSString *)userName lat:(double)lat lng:(double)lng;
 -(void)clearmapdata;
 @end
