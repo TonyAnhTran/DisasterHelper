@@ -135,6 +135,8 @@ NSInteger static compareViewsByOrigin(id sp1, id sp2, void *context)
         @catch (NSException *exception) {
             NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
             [session setValue:@"" forKey:@"ssid"];
+            [session setObject:@"NO" forKey:@"isVictim"];
+
              NSLog(@"Logout in offline mode");
         }
         @finally {

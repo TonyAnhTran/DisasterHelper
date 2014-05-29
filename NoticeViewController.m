@@ -96,6 +96,14 @@ NSString *bx;
             
             NSLog(@"%@",returnFromNewser);
             int length =[returnFromNewser count];
+            @try {
+                NSString *retu = [returnFromNewser valueForKey:@"msg"];
+                if ([retu isEqualToString:@"There is no request sent"]) {
+                    NSLog(@"No request sent");
+                }
+            }@catch (NSException *e) {
+                
+            
 //            if ([returnFromNewser[0] isEqualToString:@"There is no request sent"]) {
 //                //do nothing
 //                NSLog(@"Return nothing");
@@ -138,6 +146,7 @@ NSString *bx;
                     [noticeUser setNoticeReplied:replied];
                     [noticesList insertObject:noticeUser atIndex:1];
                 
+            }
             }
         }
         @catch (NSException *exception) {

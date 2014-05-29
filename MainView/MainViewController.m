@@ -36,8 +36,9 @@
     NSString *markerlocation;
     
     NSMutableArray *newsearchVictimarr;
+    NSMutableArray *markerVictimPhone;
+    int markerIndex;
     
-   
 }
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
@@ -46,10 +47,9 @@
 
 @end
 NSInteger secondsCount = 30;
- AVAudioPlayer *audioPlayer;
+AVAudioPlayer *audioPlayer;
 
 @implementation MainViewController
-
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -95,6 +95,7 @@ NSInteger secondsCount = 30;
     }
     else if([internetStatus isEqualToString:@"YES"]) {
         // add victim markers
+         markerVictimPhone=[[victimArray valueForKey:@"phonenumber"]mutableCopy];
         for(int i=0;i<[victimArray count];i++)
         {
             
@@ -103,9 +104,7 @@ NSInteger secondsCount = 30;
             double lon=[[dict valueForKey:@"longitude"] doubleValue];
             NSString *name=[dict valueForKey:@"username"];
             NSString *avatar=[dict objectForKey:@"avatar_url"];
-            victimPhone=[dict objectForKey:@"phonenumber"];
-            //  NSLog(@"avatar: %@",avatar);
-            
+
             // If avatar is default then server url is...
             if ([avatar isEqualToString:@"default_avatar.png"]) {
                 
@@ -147,11 +146,10 @@ NSInteger secondsCount = 30;
                 marker.position= CLLocationCoordinate2DMake(lat,lon);
                 marker.icon =[UIImage imageWithData:newimageData];
                 marker.title = name;
+                marker.zIndex=i;
                 marker.snippet = @"Help me! Click on get victim button to update victims list and my location address";
                 marker.map = mapView_;
-                //  NSLog(@"victim added");
-                
-                
+    
             }
             else {
                 
@@ -168,8 +166,10 @@ NSInteger secondsCount = 30;
                 marker.position= CLLocationCoordinate2DMake(lat,lon);
                 marker.icon =[UIImage imageWithData:newimageData];
                 marker.title = name;
+                marker.zIndex=i;
                 marker.snippet = @"Help me! Click on get victim button to update victims list and my location address";
                 marker.map = mapView_;
+                
                 //  NSLog(@"victim added")
             }
         }
@@ -504,8 +504,6 @@ NSInteger secondsCount = 30;
 }
 
 
-
-
 -(void)clearmapdata{
     [mapView_ clear];
     [waypoints_ removeAllObjects];
@@ -576,6 +574,7 @@ NSInteger secondsCount = 30;
 }
 -(void)searchActions{
      [self clearmapdata];
+    [markerVictimPhone removeAllObjects];
     
     NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
     //NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
@@ -600,13 +599,14 @@ NSInteger secondsCount = 30;
             //call search place funtion
             [sp searchQuery:addressField.text withCallback:@selector(addMarkerbySearch) withDelegate:self];
      
-            
+            markerVictimPhone=[[victimArray valueForKey:@"phonenumber"]mutableCopy];
             //Check victim array data to find victim from input
             for (int i=0; i<[victimArray count]; i++)
             {
                 
                 NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
                 NSString *name=[dict valueForKey:@"username"];
+               
                 
                 //lower victim name to search
                 NSString *namelower = [name lowercaseString];
@@ -731,6 +731,8 @@ NSInteger secondsCount = 30;
 
 }
 -(void)getVictimByNotification{
+    [self clearmapdata];
+    [markerVictimPhone removeAllObjects];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
    	NSString *internetStatus=[user objectForKey:@"Internet"];
     
@@ -776,7 +778,7 @@ NSInteger secondsCount = 30;
                 NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
                 [victimData setValue:data forKey:@"victimdata"];
                 victimArray =[[victimData valueForKey:@"victimdata"]mutableCopy];
-                
+                 markerVictimPhone=[[victimArray valueForKey:@"phonenumber"]mutableCopy];
                 
                 for(int i=0;i<[victimArray count];i++)
                 {
@@ -785,6 +787,7 @@ NSInteger secondsCount = 30;
                     double lat=[[dict valueForKey:@"latitude"] doubleValue];
                     double lon=[[dict valueForKey:@"longitude"] doubleValue];
                     NSString *name=[dict valueForKey:@"username"];
+                    
                     NSString *namelower = [name lowercaseString];
                     //lower input text
                     NSString *victimNamelower=[victimNameSearch lowercaseString];
@@ -893,23 +896,7 @@ NSInteger secondsCount = 30;
         
     }
 }
-// Change custom infowindow when click on marker
-//-(UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-//    CustomInforWindow *InfoWindow  =  [[[NSBundle mainBundle] loadNibNamed:@"ViewMapMarker" owner:self options:nil] objectAtIndex:0];
-//
-////  for(int i=0;i<[victimArray count];i++)
-////    {
-////        NSDictionary *dict=(NSDictionary *)[victimArray objectAtIndex:i];
-////
-////        NSString *namenumber=[dict valueForKey:@"username"];
-////        NSString *phonenumber=[dict valueForKey:@"username"];
-//
-//    InfoWindow.name.text= marker.title;
-//    InfoWindow.phone.text= marker.snippet;
-//
-////    }
-//return InfoWindow;
-//}
+
 
 #pragma mark - KVO updates
 
@@ -950,6 +937,12 @@ NSInteger secondsCount = 30;
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker*)marker
     {
          self.makerInfoView.hidden=YES;
+        NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
+        NSString *userPhone =[phonenumber valueForKey:@"phone"];
+        
+        NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+        NSString *isVictim=[session objectForKey:@"isVictim"];
+        
         //event when marker is a place
         if([marker.title isEqualToString:@"This place is:"]){
             confirm = [[UIAlertView alloc] initWithTitle:@"What do you want?"
@@ -964,42 +957,48 @@ NSInteger secondsCount = 30;
         //event when marker is a victim
         else
         {
-            self.makerInfoView.hidden=NO;
             self.inforVictimname.text=marker.title;
             self.inforVictimAvatar.image=marker.icon;
- 
-            victimlocation= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
+            markerIndex = marker.zIndex;
+            if ([isVictim isEqualToString:@"NO"])
+            {
+                NSString *markerPhone=[markerVictimPhone objectAtIndex:markerIndex];
+                
+                if (![userPhone isEqualToString:markerPhone])
+                {
+                    self.makerInfoView.hidden=NO;
+                    
+                    victimlocation= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
+                    
+                    NSString *location= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
+                    
+                    NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
+                    NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl,location];
+                    url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+                    
+                    NSURL *queryUrl = [NSURL URLWithString:url];
+                    NSData *data = [NSData dataWithContentsOfURL: queryUrl];
+                    
+                    NSError* error;
+                    NSDictionary *json = [NSJSONSerialization
+                                          JSONObjectWithData:data
+                                          options:kNilOptions
+                                          error:&error];
+                    
+                    
+                    NSArray* results = [json objectForKey:@"results"];
+                    NSDictionary *result = [results objectAtIndex:0];
+                    NSString *address = [result objectForKey:@"formatted_address"];
+                    
+                    self.victimAdress.text=address;
+                    
+                    }
+
+                }
+            else{
+                self.makerInfoView.hidden=YES;
+            }
             
-            NSString *location= [NSString stringWithFormat:@"%f,%f",marker.position.latitude,marker.position.longitude];
-            
-            NSString *geocodingBaseUrl = @"http://maps.googleapis.com/maps/api/geocode/json?";
-            NSString *url = [NSString stringWithFormat:@"%@address=%@&sensor=false", geocodingBaseUrl,location];
-            url = [url stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-            
-            NSURL *queryUrl = [NSURL URLWithString:url];
-            NSData *data = [NSData dataWithContentsOfURL: queryUrl];
-            
-            NSError* error;
-            NSDictionary *json = [NSJSONSerialization
-                                  JSONObjectWithData:data
-                                  options:kNilOptions
-                                  error:&error];
-            
-            //   NSLog(@"json is: %@", json);
-            
-            NSArray* results = [json objectForKey:@"results"];
-            NSDictionary *result = [results objectAtIndex:0];
-            NSString *address = [result objectForKey:@"formatted_address"];
-            
-            self.victimAdress.text=address;
-            
-       // NSLog(@"victimlocation 1: %@",victimlocation);
-//    confirm = [[UIAlertView alloc] initWithTitle:@"Victim was saved?"
-//                                                    message:@""
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"Cancel"
-//                                          otherButtonTitles:@"Victim is safe now",@"Get direction to victim",@"This user is a spammer",nil];
-//    [confirm show];
         }
 }
 
@@ -1152,6 +1151,7 @@ NSInteger secondsCount = 30;
 // Get and display victims with adress data when click on that button
 - (IBAction)Getvictim:(id)sender {
    [self clearmapdata];
+    [markerVictimPhone removeAllObjects];
 //    NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
 //    victimArray =[victimData valueForKey:@"victimdata"];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -1162,6 +1162,7 @@ NSInteger secondsCount = 30;
     
     NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
     NSString *ssid=[session objectForKey:@"ssid"];
+    NSString *isVictim=[session objectForKey:@"isVictim"];
     
     NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
     NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
@@ -1179,6 +1180,41 @@ NSInteger secondsCount = 30;
     } else if([internetStatus isEqualToString:@"YES"]) {
         if ([check isEqualToString:@"LOGIN"]) {
             @try {
+                if ([isVictim isEqualToString:@"YES"]) {
+                    NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
+                    NSString *phoneNumber =[phonenumber valueForKey:@"phone"];
+                    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+                    NSString *ssid=[session objectForKey:@"ssid"];
+                    
+                    //        NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
+                    NSMutableDictionary *myDictionary = [[NSMutableDictionary alloc] init];
+                    [myDictionary setObject:@"checkMessage" forKey:@"key"];
+                    [myDictionary setObject:ssid forKey:@"sid"];
+                    [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
+                    
+                    NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                                     options:kNilOptions
+                                                                       error:nil];
+                    NewServer *connect = [[NewServer alloc] init];
+                    NSMutableArray *returnFromNewser=[[connect postRequest:url withData:myData] mutableCopy];
+                    
+                    for(int i=0;i<[returnFromNewser count];i++){
+                        NSDictionary *dict=(NSDictionary *)[returnFromNewser objectAtIndex:i];
+                        //NSLog(@"dict: %@",dict);
+                        double lat=[[dict valueForKey:@"victimlatitude"] doubleValue];
+                        double lon=[[dict valueForKey:@"victimlongitude"] doubleValue];
+                        GMSMarker *marker= [[GMSMarker alloc] init];
+                        marker.icon=[UIImage imageNamed:@"add-emergeny-button.png"];
+                        marker.position= CLLocationCoordinate2DMake(lat,lon);
+                        marker.zIndex=i;
+                        marker.title = [dict valueForKey:@"victimname"];
+                        marker.snippet = @"I'm coming to help you";
+                        marker.map = mapView_;
+                        
+                    }
+        
+                }
+                else{
                 NSMutableDictionary *myVictimlist = [[NSMutableDictionary alloc] init];
                 [myVictimlist setValue:@"checkVictim" forKey:@"key"];
                 [myVictimlist setValue:victimradius forKey:@"radius"];
@@ -1186,26 +1222,20 @@ NSInteger secondsCount = 30;
                 [myVictimlist setObject:victimTimeSet forKey:@"filter"];
                 [myVictimlist setValue:userPhone forKey:@"phonenumber"];
                 
-                
-                // NSError* error;
+    
                 NSData *myData1 = [NSJSONSerialization dataWithJSONObject:myVictimlist
                                                                   options:kNilOptions
                                                                     error:nil];
-                
-                //  NSLog(@"my data1 %@",myData1);
-                
+
                 //    NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
                 NewServer *connect = [[NewServer alloc] init];
                 NSArray *data = [[connect postRequest:url withData:myData1] mutableCopy];
                 
-                //   NSLog(@"data %@",data);
-                
-                //NSLog(@"data is: %@",data);
                 NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
                 [victimData setValue:data forKey:@"victimdata"];
                 victimArray =[[victimData valueForKey:@"victimdata"]mutableCopy];
+                markerVictimPhone=[[victimArray valueForKey:@"phonenumber"]mutableCopy];
                 
-                // NSLog(@"victim array: %@",victimArray);
                 
                 for(int i=0;i<[victimArray count];i++)
                 {
@@ -1257,6 +1287,7 @@ NSInteger secondsCount = 30;
                         marker.position= CLLocationCoordinate2DMake(lat,lon);
                         marker.icon =[UIImage imageWithData:newimageData];
                         marker.title = name;
+                        marker.zIndex=i;
                         marker.snippet = address;
                         marker.map = mapView_;
                         
@@ -1298,9 +1329,11 @@ NSInteger secondsCount = 30;
                         marker.position= CLLocationCoordinate2DMake(lat,lon);
                         marker.icon =[UIImage imageWithData:newimageData];
                         marker.title = name;
+                        marker.zIndex=i;
                         marker.snippet = address;
                         marker.map = mapView_;
                         
+                        }
                     }
                     // NSLog(@"victim added");
                 };
@@ -1337,6 +1370,7 @@ NSInteger secondsCount = 30;
     NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
     NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
     NSURL *url= [[NSURL alloc] initWithString:stringurl];
+    NSString *markerPhone= [markerVictimPhone objectAtIndex:markerIndex];
     
         if(sender.tag == 0){
             NSString *mylocation =[NSString stringWithFormat:@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude];
@@ -1373,6 +1407,32 @@ NSInteger secondsCount = 30;
         }
         
         else if(sender.tag == 1){
+            NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
+            NSString *phoneNumber =[phonenumber valueForKey:@"phone"];
+            
+            NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+            NSString *ssid=[session objectForKey:@"ssid"];
+            
+            NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
+            NSString *stringurl=[ServerUrl objectForKey:@"serverurl"];
+            NSURL *url= [[NSURL alloc] initWithString:stringurl];
+            //  latAtt=[NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+            //  longAtt=[NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
+            //        NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
+            NSMutableDictionary *myDictionary = [[NSMutableDictionary alloc] init];
+            [myDictionary setObject:@"replyMessage" forKey:@"key"];
+            [myDictionary setObject:ssid forKey:@"sid"];
+            [myDictionary setObject:phoneNumber forKey:@"phonenumber"];
+            [myDictionary setObject:markerPhone forKey:@"targetphone"];
+            [myDictionary setObject:@"I'm coming to help you" forKey:@"content"];
+           
+            
+            NSData *myData = [NSJSONSerialization dataWithJSONObject:myDictionary
+                                                             options:kNilOptions
+                                                               error:nil];
+            
+            Server *connect = [[Server alloc] init];
+            [connect postRequest:url withData:myData];
             NSLog(@"I'm coming to help you");
             self.makerInfoView.hidden=YES;
         }
@@ -1381,7 +1441,7 @@ NSInteger secondsCount = 30;
             NSMutableDictionary *userReport = [[NSMutableDictionary alloc] init];
             [userReport setValue:@"confirmOther" forKey:@"key"];
             [userReport setValue:ssid forKey:@"sid"];
-            [userReport setValue:victimPhone forKey:@"targetphone"];
+            [userReport setValue:markerPhone forKey:@"targetphone"];
             [userReport setValue:phoneNumber forKey:@"phonenumber"];
             
             
@@ -1402,7 +1462,7 @@ NSInteger secondsCount = 30;
             [userReport setValue:@"reportUser" forKey:@"key"];
             [userReport setValue:ssid forKey:@"sid"];
             [userReport setValue:phoneNumber forKey:@"phonenumber"];
-            [userReport setValue:victimPhone forKey:@"targetphone"];
+            [userReport setValue:markerPhone forKey:@"targetphone"];
             
             NSData *myData1 = [NSJSONSerialization dataWithJSONObject:userReport
                                                               options:kNilOptions

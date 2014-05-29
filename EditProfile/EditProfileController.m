@@ -141,8 +141,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = customBarItem;
 
-    
-    
+    profilePicture.layer.cornerRadius = profilePicture.frame.size.width / 2;
+    profilePicture.clipsToBounds = YES;
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.

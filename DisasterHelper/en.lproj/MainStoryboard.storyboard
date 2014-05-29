@@ -712,7 +712,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="liA-VU-l0u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1697" y="-3391"/>
+            <point key="canvasLocation" x="2749" y="-3391"/>
         </scene>
         <!--Main View Controller - Map-->
         <scene sceneID="HD1-k2-F40">
@@ -827,7 +827,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9Sn-a8-vx3" userLabel="victimAvatar">
-                                        <rect key="frame" x="3" y="35" width="82" height="79"/>
+                                        <rect key="frame" x="3" y="35" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BO6-Sp-c9r" userLabel="placeLb">
@@ -942,7 +942,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NUQ-CP-Rqt" userLabel="clearMapBt">
-                                <rect key="frame" x="21" y="445" width="30" height="30"/>
+                                <rect key="frame" x="21" y="447" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -952,7 +952,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dEk-if-elZ" userLabel="getVictimsBt">
-                                <rect key="frame" x="99" y="448" width="30" height="30"/>
+                                <rect key="frame" x="99" y="447" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="group.png"/>
@@ -961,7 +961,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vqK-wP-m1x" userLabel="changeMaptypeBt">
-                                <rect key="frame" x="192" y="445" width="30" height="30"/>
+                                <rect key="frame" x="192" y="447" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="globe.png"/>
@@ -970,7 +970,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8ZC-Q3-lGD" userLabel="myLocationBt">
-                                <rect key="frame" x="272" y="445" width="30" height="31"/>
+                                <rect key="frame" x="272" y="447" width="28" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="arrow-direction.png"/>
@@ -1180,7 +1180,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sCl-x2-VMI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1292" y="-3814"/>
+            <point key="canvasLocation" x="1084" y="-3769"/>
         </scene>
         <!--Main Flat View Controller-->
         <scene sceneID="5I1-8D-2Pn">
@@ -1191,7 +1191,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="AMt-QM-XMZ" customClass="GMSMapView">
-                                <rect key="frame" x="8" y="19" width="148" height="210"/>
+                                <rect key="frame" x="8" y="19" width="148" height="234"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ISi-Z8-oo9">
@@ -1368,8 +1368,8 @@
                                     <segue destination="yPn-2r-uAO" kind="push" id="2mc-M8-t5h"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="YYt-Yy-Syf">
-                                <rect key="frame" x="251" y="63" width="57" height="45"/>
+                            <imageView userInteractionEnabled="NO" contentMode="topRight" id="YYt-Yy-Syf">
+                                <rect key="frame" x="255" y="62" width="54" height="42"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JDa-xT-bGa">

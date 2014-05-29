@@ -20,7 +20,7 @@
     NSString *internetStatus=[user objectForKey:@"Internet"];
     
     NSUserDefaults *setting = [NSUserDefaults standardUserDefaults];
-    [setting setValue:@"5" forKey:@"RadiusSearch"];
+    [setting setValue:@"50" forKey:@"RadiusSearch"];
     [setting setValue:@"2" forKey:@"VictimTimeSet"];
     
     NSString *victimradius=[setting objectForKey:@"RadiusSearch"];
@@ -46,6 +46,7 @@
             NSUserDefaults *phonenumber = [NSUserDefaults standardUserDefaults];
             NSString *userPhone =[phonenumber valueForKey:@"phone"];
             
+            
             NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
             NSString *ssid=[session objectForKey:@"ssid"];
             
@@ -70,6 +71,14 @@
                 //            NSURL *url = [[NSURL alloc] initWithString:@"http://192.168.10.115:3000/users"];
                 NewServer *connect = [[NewServer alloc] init];
                 NSArray *data = [[connect postRequest:url withData:myData1]mutableCopy];
+                
+                NSMutableArray *victimPhoneData=[data valueForKey:@"phonenumber"];
+                for (int i=0; i<victimPhoneData.count; i++) {
+                    NSString *victimPhone=[victimPhoneData objectAtIndex:i];
+                    if ([victimPhone isEqualToString:userPhone]) {
+                        [session setObject:@"YES" forKey:@"isVictim"];
+                    }
+                }
                 
                 NSUserDefaults *victimData = [NSUserDefaults standardUserDefaults];
                 [victimData setValue:data forKey:@"victimdata"];

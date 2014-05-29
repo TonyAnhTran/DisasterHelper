@@ -557,6 +557,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 
 - (IBAction)sendRequestHelp:(id)sender {
+    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+
     NSUserDefaults *checkLogin = [NSUserDefaults standardUserDefaults];
     NSString *check = [checkLogin valueForKey:@"checkLogin"];
     
@@ -599,6 +601,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     {
         //Do not send request help
         //Send request safe
+        [session setObject:@"NO" forKey:@"isVictim"];
         if ([internetStatus isEqualToString:@"NO"]) {
             sendRequestHelpLabel.text=@"Send Request Help";
              //Add funtion to send request safe to friend by sms///
@@ -774,6 +777,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    NSUserDefaults *session = [NSUserDefaults standardUserDefaults];
+
     if (alertView == notexistAlert ||  alertView == invalidFormatAlert || confirm){
         if ([title isEqualToString:@"OK"])
         {
@@ -794,6 +799,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             case 1:{
                 // labelHelp.text = @"Send Help";
                 [countdownTimer invalidate];
+                [session setObject:@"YES" forKey:@"isVictim"];
+
                 countdownTimer = nil;
                 sendRequestHelpLabel.text=@"Safe now";
                 //[alertView release];

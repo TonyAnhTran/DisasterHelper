@@ -19,8 +19,8 @@
     //http://192.168.10.115:3000/users  @"http://projectdh.herokuapp.com/users"
     [GMSServices provideAPIKey:@"AIzaSyBz7GqCvizFHZ9OsjeZEYr4UvzJ70SYQrE"];
     NSUserDefaults *ServerUrl = [NSUserDefaults standardUserDefaults];
-    NSString *serverIP= [NSString stringWithFormat:@"http://dhproject.herokuapp.com"];
-    NSString *url= [NSString stringWithFormat:@"http://dhproject.herokuapp.com/users"];
+    NSString *serverIP= [NSString stringWithFormat:@"http://dhservice.herokuapp.com"];
+    NSString *url= [NSString stringWithFormat:@"http://dhservice.herokuapp.com/users"];
     [ServerUrl setObject:url forKey:@"serverurl"];
     [ServerUrl setObject:serverIP forKey:@"serverIP"];
     
